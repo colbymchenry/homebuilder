@@ -7,6 +7,8 @@ use App\HousePlan;
 use Illuminate\Http\Request;
 use App\PriceSheet;
 use App\QuickResponse;
+use App\Lot;
+use App\Project;
 
 class HousePlansController extends Controller
 {
@@ -151,11 +153,23 @@ class HousePlansController extends Controller
 
     public function indexBuilder() {
         $id = \request('id');
+        $lot = \request('lot');
+        $project = \request('project');
 
         if(!HousePlan::where('id', $id)->exists()) {
             abort(404);
         }
 
-        return view('house_plan_builder')->with('house_plan', HousePlan::where('id', $id)->first());
+        if(!Lot::where('id', $id)->exists()) {
+            abort(404);
+        }
+
+        if(!Project::where('id', $id)->exists()) {
+            abort(404);
+        }
+
+
+        return view('house_plan_builder')->with('house_plan', HousePlan::where('id', $id)->first())
+        ->with('lot', Lot::where('id', $id)->first())->with('project', Project::where('id', $id)->first());
     }
 }

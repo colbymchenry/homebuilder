@@ -161,6 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -234,6 +235,8 @@ return [
         'PriceSheet' => App\PriceSheet::class,
         'DesignOption' => App\DesignOption::class,
         'File' => App\File::class,
+        'TaskTemplate' => App\TaskTemplate::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

@@ -11,14 +11,39 @@
                             <h5 style="padding-top: 0.25em;">{{ $project->name }} Lot #{{ $lot->number }}</h5>
                         </div>
                         <div class="col-sm" style="text-align: right;">
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="delete_lot();">Delete Lot</button>
+                            @if($lot->plan !== null && HousePlan::where('id', $lot->plan)->exists())
+                                <a class="btn btn-sm btn-primary" href="/house-plan-builder?id={{ $lot->plan }}&lot={{ $lot->id }}&project={{ $project->id }}" id="spec_build_btn">Spec Build Out</a>
+                            @else
+                                <a class="btn btn-sm btn-primary disabled" href="#" id="spec_build_btn">Spec Build Out</a>    
+                            @endif
+                            <button type="button" class="btn btn-sm btn-danger" onclick="delete_lot();">Delete Lot</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body">
                     <div class="container">
-                    
+                        <div class="row">
+                            <div class="col">
+                                <h4>Plan:</h4>
+                            </div>
+                            <div class="col">
+                                <select class="selectpicker" id="plan_selection" data-toggle="select">
+                                    @if($lot->plan !== null && HousePlan::where('id', $lot->plan)->exists())
+                                        <option value="" data-id="-1">Select...</option>
+                                        <option value="" data-id="{{ $lot->plan }}" selected>{{ HousePlan::where('id', $lot->plan)->first()->name }}</option>
+                                    @else
+                                        <option value="" data-id="-1" selected>Select...</option>
+                                    @endif
+
+                                    @foreach(HousePlan::get() as $plan)
+                                        @if($lot->plan !== $plan->id)
+                                            <option data-id="{{ $plan->id }}">{{ $plan->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -171,6 +196,38 @@
         overwriteInitial: true,
         maxFileSize:200000,
         maxFilesNum: 10
+    });
+
+    $(document).ready(function() {
+        $("#plan_selection").on('change', function(e) {
+            var id = $(this).find(':selected').data('id');
+            var href = "&lot={{ $lot->id }}&project={{ $project->id }}";
+             $.ajax({
+                url: "/set-lot-plan",
+                type: 'POST',
+                data: {
+                    id: "{{ $lot->id }}",
+                    plan_id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+            }).done(function (msg) {
+                if(msg['icon'] != 'success') {
+                    Swal.fire({
+                        icon: msg['icon'],
+                        text: msg['msg']
+                    });
+                } else {
+                    if(id !== -1) {
+                        $("#spec_build_btn").removeClass('disabled');
+                        $("#spec_build_btn").prop('href', `/house-plan-builder?id=${id}${href}`);
+                    } else {
+                        $("#spec_build_btn").addClass('disabled');
+                        $("#spec_build_btn").prop('href', '#');
+                    }
+                }
+            });
+        });
+       
     });
 </script>
 @endsection

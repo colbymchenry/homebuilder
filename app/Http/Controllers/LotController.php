@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\HousePlan;
 use Illuminate\Http\Request;
 use App\Task;
 use App\Lot;
@@ -78,6 +79,29 @@ class LotController extends Controller
 
         $lot = Lot::where('id', $id)->first();
         return view('lot')->with('lot', $lot)->with('project', $lot->getProject());
+    }
+
+    public function setPlan(Request $request) {
+        $id = $request['id'];
+        $plan_id = $request['plan_id'];
+
+        if (!Lot::where('id', $id)->exists()) {
+            return QuickResponse::error("Could not find lot.");
+        }
+
+        if ($plan_id != -1 && !HousePlan::where('id', $plan_id)->exists()) {
+            return QuickResponse::warning('Could not find floor plan.');
+        }
+
+        $lot = Lot::where("id", $id)->first();
+        if($plan_id < 0) {
+            $lot->plan = null;
+        } else {
+            $lot->plan = $plan_id;
+        }
+        $lot->save();
+
+        return QuickResponse::success("Plan set sucessfully.");
     }
 
 }

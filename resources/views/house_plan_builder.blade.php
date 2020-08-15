@@ -5,8 +5,12 @@
     <div class="row justify-content-center" style="padding-bottom: 2em;">
         <div class="col-md-8">
             <div class="float-right">
-                <button type="submit" class="btn btn-success" onclick="new_design_option()">Save for Customer</button>
-                <button type="submit" class="btn btn-primary" onclick="new_design_option()">Save for Builder</button>
+                <form action="/buildout-pdf" method="POST" target="_blank" id="export_pdf">
+                    @csrf
+                    <input name="lot" value="{{ $lot->id }}" hidden></input>
+                    <input name="project" value="{{ $project->id }}" hidden></input>
+                    <button type="submit" class="btn btn-danger">Export to PDF <i class="far fa-file-pdf"></i></button>
+                </form>
             </div>
         </div>
     </div>
@@ -15,8 +19,15 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header container">
-                            <div class="row">
-                                <h3 style="padding-top: 0.25em;padding-left: 1em;">Spec Build Out</h3>
+                            <div class="pl-3 pt-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <h3>{{ $house_plan->name }}</h3>
+                                    </div>
+                                    <div class="col">
+                                        <p class="float-right">{{ $project->name }} - Lot #{{ $lot->number }}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -29,12 +40,19 @@
                                             <p>{{ $design_option->name }}</p>
                                         </div>
                                         <div class="col-sm col-xs-12 p-3">
-                                            <select class="form-control" id="design_option_{{ $design_option->id }}" data-toggle="select" title="Simple select" data-live-search="true" data-live-search-placeholder="Search ...">
-                                                <option value="" data-amount="0" disabled selected>Select your option</option>
+                                            <select class="selectpicker" id="design_option_{{ $design_option->id }}" data-toggle="select" title="Simple select">
+                                                <option data-amount="0" selected>Standard</option>
                                                
-                                                @foreach(PriceSheet::where('design_option', $design_option->id)->get() as $price_sheet)
-                                                    <option data-amount="{{ $price_sheet->price }}">{{ $price_sheet->name }}</option>
-                                                @endforeach
+                                                <optgroup label="Standard">
+                                                    @foreach(PriceSheet::where('design_option', $design_option->id)->where('price', '<', 1)->get() as $price_sheet)
+                                                        <option data-amount="{{ $price_sheet->price }}" data-id="{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
+                                                    @endforeach
+                                                </optgroup>
+                                                <optgroup label="Upgrade">
+                                                    @foreach(PriceSheet::where('design_option', $design_option->id)->where('price', '>', 0)->get() as $price_sheet)
+                                                        <option data-amount="{{ $price_sheet->price }}" data-id="{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
+                                                    @endforeach
+                                                </optgroup>
                                             </select>
                                         </div>
                                         <div class="col-sm col-xs-12 p-3">
@@ -80,6 +98,19 @@
             });
 
             $('#subtotal').text(formatter.format(subtotal));
+        });
+
+        $('#export_pdf').on('submit', function(event) {
+            $("select[id^=design_option_]").each(function(e) {
+                var obj = $(this);
+                var id = obj.prop('id').split('_')[2];
+                var selected_id = obj.find(":selected").data('id');
+
+                $("<input />").attr("type", "hidden")
+                .attr("name", "design_option_" + id)
+                .attr("value", selected_id)
+                .appendTo("#export_pdf");
+            });
         });
     });
 

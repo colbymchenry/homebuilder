@@ -37,6 +37,8 @@ Route::get('/house-plan-builder', 'HousePlansController@indexBuilder');
 
 Route::get('/task-templates', 'TaskController@indexTemplates');
 
+Route::get('/template', 'TaskController@indexTemplate');
+
 Route::post('/create-project', 'ProjectController@create');
 
 Route::post('/delete-project', 'ProjectController@delete');
@@ -70,3 +72,17 @@ Route::post('/create-price-sheet','HousePlansController@createPriceSheet');
 Route::post('/delete-price-sheet','HousePlansController@deletePriceSheet');
 
 Route::post('/update-price-sheet','HousePlansController@updatePriceSheet');
+
+Route::post('/create-template','TaskController@createTemplate');
+
+Route::post('/delete-template','TaskController@deleteTemplate');
+
+Route::post('/delete-template-task','TaskController@deleteTemplateTask');
+
+Route::post('/create-template-task','TaskController@createTemplateTask');
+
+Route::post('/sort-template-task','TaskController@sortTemplateTask');
+
+Route::post('/set-lot-plan', 'LotController@setPlan');
+
+Route::post('/buildout-pdf', 'PDFController@generatePDF_PlanBuildout');
