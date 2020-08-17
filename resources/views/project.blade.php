@@ -18,7 +18,7 @@
 
                 <div class="card-body">
                     <div class="container" id="lots-div">
-                        @foreach(Lot::where('project', $project->id)->orderBy('number', 'DESC')->get() as $lot)
+                        @foreach(Lot::where('project', $project->id)->orderBy('number', 'ASC')->get() as $lot)
                             <div class="row p-3">
                                 <h5><a href="/lot?id={{ $lot->id }}">Lot #{{ $lot->number }}</a></h5>
                             </div>
