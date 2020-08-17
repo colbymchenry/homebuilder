@@ -226,7 +226,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="container">
+                                    <div class="container" id="design_option_${msg['id']}">
                                         <div class="row justify-content-md-center">
                                             <div class="col-6 p-3">
                                                 <input id="price_sheet_new_name_${msg['id']}" type="text" name="price_sheet_new_name" class="form-control" placeholder="Variation">

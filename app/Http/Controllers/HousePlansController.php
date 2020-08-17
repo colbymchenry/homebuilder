@@ -72,7 +72,7 @@ class HousePlansController extends Controller
         $house_plan = $request['house_plan'];
         $category = $request['category'];
 
-        if(DesignOption::where('name', $name)->where('house_plan', $house_plan)->exists()) {
+        if(DesignOption::where('name', $name)->where('house_plan', $house_plan)->where('category', $category)->exists()) {
             return QuickResponse::warning('Design option with that name in that house plan already exists.');
         }
 
