@@ -40,6 +40,9 @@ class PDFController extends Controller
             }
         }
 
+        \Log::info("------------");
+        \Log::info($sub_totals);
+
         return view('pdfs.plan_build_summary')->with('choices', $choices)->with('sub_totals', $sub_totals)
         ->with('house_plan', \request('house_plan'))->with('project', \request('project'))->with('lot', \request('lot'));
     }
