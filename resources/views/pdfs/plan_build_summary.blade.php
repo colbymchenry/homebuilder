@@ -46,7 +46,7 @@
                                     <td>{{ PriceSheet::where('id', $choices[$design_option->id])->first()->getFormattedPrice() }}</td>
                                 @else
                                     <td>Standard</td>
-                                    <td>$0.00</td>
+                                    <td>$0</td>
                                 @endif
                             </tr>
                             @endforeach
