@@ -167,11 +167,11 @@ class HousePlansController extends Controller
             abort(404);
         }
 
-        if(!Lot::where('id', $id)->exists()) {
+        if(!Lot::where('id', $lot)->exists()) {
             abort(404);
         }
 
-        if(!Project::where('id', $id)->exists()) {
+        if(!Project::where('id', $project)->exists()) {
             abort(404);
         }
 
