@@ -324,8 +324,8 @@
         uploadUrl: "/file-upload",
         uploadExtraData: function() {
             return {
-                table: 'lots',
-                relational_id: "{{ $lot->id }}",
+                table: 'house_plans',
+                relational_id: "{{ $house_plan->id }}",
                 _token: "{{ @csrf_token() }}",
             };
         },
