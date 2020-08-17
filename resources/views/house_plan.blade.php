@@ -68,6 +68,39 @@
                 </div>
             </div>
         @endforeach
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <h5 style="padding-top: 0.25em;">Files</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row justify-content-md-center">
+                                @foreach(File::where('relational_id', $house_plan->id)->where('relational_table', 'house_plans')->get() as $file)
+                                <div class="col-sm">
+                                    <a href="{{ $file->getURL() }}">{{ $file->name }}</a>
+                                </div>
+                                <div class="col-sm float-right">
+                                    <a href="{{ $file->getURL() }}" class="button float-right" download><i class="fa fa-download"></i></a>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <br />
+                        <div class="container">
+                            @include('file_upload_html')
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>  
 
 </div>
@@ -283,5 +316,23 @@
             });
         });
     }
+</script>
+
+<script type="text/javascript">
+    $("#file-1").fileinput({
+        theme: 'fas',
+        uploadUrl: "/file-upload",
+        uploadExtraData: function() {
+            return {
+                table: 'lots',
+                relational_id: "{{ $lot->id }}",
+                _token: "{{ @csrf_token() }}",
+            };
+        },
+        allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx', 'zip', 'jpeg'],
+        overwriteInitial: true,
+        maxFileSize:200000,
+        maxFilesNum: 10
+    });
 </script>
 @endsection
