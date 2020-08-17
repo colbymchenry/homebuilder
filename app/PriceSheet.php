@@ -12,10 +12,7 @@ class PriceSheet extends Model
     }
 
     public static function formatToCurrency($str) { 
-        $fmt = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
-        $fmt->setTextAttribute(\NumberFormatter::CURRENCY_CODE, 'USD');
-        $fmt->setAttribute(\NumberFormatter::FRACTION_DIGITS, 0);
-        return  $fmt->formatCurrency($str, 'USD');
+        return '$' . number_format($str);
     }
 
 }
