@@ -15,7 +15,7 @@
 
 
 
-    @foreach(DesignCategory::where('house_plan', $house_plan->id)->get() as $design_category)
+    @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('name')->get() as $design_category)
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
@@ -35,7 +35,7 @@
                             <div class="container" id="design_category_{{ $design_category->id }}">
                                
 
-        @foreach(DesignOption::where('house_plan', $house_plan->id)->where('category', $design_category->id)->get() as $design_option)
+        @foreach(DesignOption::where('house_plan', $house_plan->id)->orderBy('name')->where('category', $design_category->id)->get() as $design_option)
             <div class="row justify-content-center" id="div_design_option_{{ $design_option->id }}">
                 <div class="col-md-12">
                     <div class="card">
