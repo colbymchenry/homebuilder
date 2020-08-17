@@ -30,6 +30,7 @@ class PDFController extends Controller
                         if(array_key_exists($design_option->category, $sub_totals)) {
                             $sub_totals[$design_option->category] += PriceSheet::where('id', $value)->first()->price;
                             \Log::info($design_option->name . '+=' . $design_option->category);
+                            \Log::info($sub_totals[$design_option->category]);
                         } else {
                             $sub_totals[$design_option->category] = PriceSheet::where('id', $value)->first()->price;
                             \Log::info($design_option->name . '=' . $design_option->category);
