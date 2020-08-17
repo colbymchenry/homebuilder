@@ -16,21 +16,27 @@ class PDFController extends Controller
     }
 
     public function generatePDF_PlanBuildout() {
-        $sub_total = 0;
         $choices = [];
+        $sub_totals = [];
         foreach(\request()->toArray() as $key => $value) {
-            if($key !== '_token') {
+            if($key !== '_token' && $value != null) {
                 if(strpos($key, 'design_option_') !== false) {
                     $id = explode('_', $key)[2];
                     if(DesignOption::where('id', $id)->exists()) {
                         $choices[$id] = $value;
-                        $sub_total += PriceSheet::where('id', $value)->first()->price;
+                        $design_option = DesignOption::where('id', $id)->first();
+                        if(array_key_exists($design_option->category, $sub_totals)) {
+                            $sub_totals[$design_option->category] += PriceSheet::where('id', $value)->first()->price;
+                        } else {
+                            $sub_totals[$design_option->category] = PriceSheet::where('id', $value)->first()->price;
+                        }
                     }
                 }
             }
         }
 
-        return view('pdfs.plan_build_summary')->with('choices', $choices)->with('sub_total', $this->getFormattedPrice($sub_total));
+        return view('pdfs.plan_build_summary')->with('choices', $choices)->with('sub_totals', $sub_totals)
+        ->with('house_plan', \request('house_plan'))->with('project', \request('project'))->with('lot', \request('lot'));
     }
 
     public function saveToFile($path, $output) {

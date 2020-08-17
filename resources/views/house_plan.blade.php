@@ -35,7 +35,7 @@
                             <div class="container" id="design_category_{{ $design_category->id }}">
                                
 
-        @foreach(DesignOption::where('house_plan', $house_plan->id)->get() as $design_option)
+        @foreach(DesignOption::where('house_plan', $house_plan->id)->where('category', $design_category->id)->get() as $design_option)
             <div class="row justify-content-center" id="div_design_option_{{ $design_option->id }}">
                 <div class="col-md-12">
                     <div class="card">
@@ -373,7 +373,7 @@
                 });
             } else {
                 var html = `
-                    <div class="row">
+                    <div class="row" id="price_sheet_${msg['id']}">
                         <div class="col-6 p-3">
                             <input id="price_sheet_name_${msg['id']}" type="text" class="form-control" value="${name}">
                         </div>

@@ -23,29 +23,47 @@
 
     <body>
         <div class="container">
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Structure</th>
-                        <th scope="col">Choice</th>
-                        <th scope="col">Upgrade Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($choices as $design_option_id => $price_sheet_id)
-                    <tr>
-                        <th scope="row">{{ DesignOption::where('id', $design_option_id)->first()->name }}</th>
-                        <td>{{ PriceSheet::where('id', $price_sheet_id)->first()->name }}</td>
-                        <td>{{ PriceSheet::where('id', $price_sheet_id)->first()->getFormattedPrice() }}</td>
-                    </tr>
-                    @endforeach
-                    <tr>
-                        <th scope="row"><b>Subtotal:</b></th>
-                        <td></td>
-                        <td><b>{{ $sub_total }}</b></td>
-                    </tr>
-                </tbody>
-            </table>
+
+        @foreach(DesignCategory::where('house_plan', $house_plan)->get() as $category)
+        @if($category->hasOptions())
+            <h1>{{ $category->name }}</h1>
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Structure</th>
+                                <th scope="col">Choice</th>
+                                <th scope="col">Upgrade Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(DesignOption::where('house_plan', $house_plan)->where('category', $category->id)->get() as $design_option)
+                            <tr>
+                                <th scope="row">{{ $design_option->name }}</th>
+                                @if(array_key_exists($design_option->id, $choices))
+                                    <td>{{ PriceSheet::where('id', $choices[$design_option->id])->first()->name }}</td>
+                                    <td>{{ PriceSheet::where('id', $choices[$design_option->id])->first()->getFormattedPrice() }}</td>
+                                @else
+                                    <td>Standard</td>
+                                    <td>$0.00</td>
+                                @endif
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <th scope="row"><b>Subtotal:</b></th>
+                                <td></td>
+                                <td><b>{{ PriceSheet::formatToCurrency($sub_totals[$category->id]) }}</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        @endif
+        @endforeach
+        
+        
         </div>      
     </body>
 </html>
