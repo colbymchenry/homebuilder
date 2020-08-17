@@ -24,10 +24,10 @@ class PDFController extends Controller
                 if(strpos($key, 'design_option_') !== false) {
                     $id = explode('_', $key)[2];
                     if(DesignOption::where('id', $id)->exists()) {
-            \Log::info($key . ":" . $value);
 
                         $choices[$id] = $value;
                         $design_option = DesignOption::where('id', $id)->first();
+                        \Log::info($design_option->name . ':' . $design_option->category);
                         if(array_key_exists($design_option->category, $sub_totals)) {
                             $sub_totals[$design_option->category] += PriceSheet::where('id', $value)->first()->price;
                         } else {
