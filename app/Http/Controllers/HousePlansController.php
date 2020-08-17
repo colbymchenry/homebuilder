@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DesignCategory;
 use App\DesignOption;
 use App\HousePlan;
 use Illuminate\Http\Request;
@@ -69,14 +70,20 @@ class HousePlansController extends Controller
     {
         $name = $request['name'];
         $house_plan = $request['house_plan'];
+        $category = $request['category'];
 
         if(DesignOption::where('name', $name)->where('house_plan', $house_plan)->exists()) {
             return QuickResponse::warning('Design option with that name in that house plan already exists.');
         }
 
+        if(!DesignCategory::where('id', $category)->exists()) {
+            return QuickResponse::warning('Design category not found.');
+        }
+
         $design_option = new DesignOption();
         $design_option->name = $name;
         $design_option->house_plan = $house_plan;
+        $design_option->category = $category;
         $design_option->save();
 
         return QuickResponse::success('Design option created.', ['id' => $design_option->id]);
@@ -171,5 +178,36 @@ class HousePlansController extends Controller
 
         return view('house_plan_builder')->with('house_plan', HousePlan::where('id', $id)->first())
         ->with('lot', Lot::where('id', $id)->first())->with('project', Project::where('id', $id)->first());
+    }
+
+    public function createDesignCategory(Request $request)
+    {
+        $name = $request['name'];
+        $house_plan = $request['house_plan'];
+
+        if(DesignCategory::where('name', $name)->where('house_plan', $house_plan)->exists()) {
+            return QuickResponse::warning('Design category with that name in that house plan already exists.');
+        }
+
+        $design_category = new DesignCategory();
+        $design_category->name = $name;
+        $design_category->house_plan = $house_plan;
+        $design_category->save();
+
+        return QuickResponse::success('Design category created.', ['id' => $design_category->id]);
+    }
+
+    public function deleteDesignCategory(Request $request)
+    {
+        $id = $request['id'];
+
+        if(!DesignCategory::where('id', $id)->exists()) {
+            return QuickResponse::warning('Design category does not exists.');
+        }
+
+        $design_category = DesignCategory::where('id', $id)->first();
+        $design_category->delete();
+
+        return QuickResponse::success('Design category deleted.');
     }
 }

@@ -6,15 +6,38 @@
     <div class="col-md-8">
         <div class="col">
             <div class="float-right">
-                <button type="submit" class="btn btn-success" onclick="new_design_option()">+ Add Design Option</button>
+                <button type="button" class="btn btn-success" onclick="new_design_category()">+ Add Design Category</button>
             </div>
         </div>
 </div>
     </div>
-    <div id="design-options-div">
+    <div id="design-categories-div">
+
+
+
+    @foreach(DesignCategory::where('house_plan', $house_plan->id)->get() as $design_category)
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header container">
+                            <div class="row">
+                                <div class="col">
+                                    <h3 style="padding-top: 0.25em;padding-left: 1em;">{{ $design_category->name }}</h3>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_category('{{ $design_category->id }}')"><i class="fa fa-trash-alt"></i></button>
+                                    <button type="button" class="btn btn-sm btn-success float-right" onclick="new_design_option('{{ $design_category->id }}')">+ Add Design Option</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body" style="background-color: lightgray;">
+                            <div class="container" id="design_category_{{ $design_category->id }}">
+                               
+
         @foreach(DesignOption::where('house_plan', $house_plan->id)->get() as $design_option)
             <div class="row justify-content-center" id="div_design_option_{{ $design_option->id }}">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header container">
                             <div class="row">
@@ -27,39 +50,35 @@
                             </div>
                         </div>
 
-                        <div class="card-body">
-                            <div class="container">
-                                <div class="container" id="design_option_{{ $design_option->id }}">
-                                    @foreach(PriceSheet::where('design_option', $design_option->id)->get() as $price_sheet)
-                                        <div class="row">
-                                            <div class="col-6  p-3">
-                                                <input id="price_sheet_name_{{ $price_sheet->id }}" type="text" class="form-control" value="{{ $price_sheet->name }}">
-                                            </div>
-                                            <div class="col-3 p-3">
-                                                <input id="price_sheet_price_{{ $price_sheet->id }}" type="number" class="form-control" value="{{ $price_sheet->price }}">
-                                            </div>
-                                            <div class="col-3 p-3">
-                                                <div class="float-right">
-                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="delete_price_sheet('{{ $price_sheet->id }}');"><i class="ni ni-fat-delete"></i></button>
-                                                    <button type="submit" class="btn btn-sm btn-primary" onclick="update_price_sheet('{{ $price_sheet->id }}');"><i class="ni ni-check-bold"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br />
-                                    @endforeach
-                                </div>
-                                <hr />
-                                <div class="row justify-content-md-center">
-                                    <div class="col-sm col-xs-12 p-3">
-                                        <input id="price_sheet_new_name_{{ $design_option->id }}" type="text" name="price_sheet_new_name" class="form-control" placeholder="Variation">
+                        <div class="container" id="design_option_{{ $design_option->id }}">
+                            @foreach(PriceSheet::where('design_option', $design_option->id)->get() as $price_sheet)
+                                <div class="row" id="price_sheet_{{ $price_sheet->id }}">
+                                    <div class="col-6  p-3">
+                                        <input id="price_sheet_name_{{ $price_sheet->id }}" type="text" class="form-control" value="{{ $price_sheet->name }}">
                                     </div>
-                                    <div class="col-sm col-xs-12 p-3">
-                                        <input id="price_sheet_new_price_{{ $design_option->id }}" type="number" class="form-control" placeholder="Price">
+                                    <div class="col-3 p-3">
+                                        <input id="price_sheet_price_{{ $price_sheet->id }}" type="number" class="form-control" value="{{ $price_sheet->price }}">
                                     </div>
-                                    <div class="col-sm col-xs-12 p-3">
+                                    <div class="col-3 p-3">
                                         <div class="float-right">
-                                            <button type="submit" class="btn btn-success" onclick="new_price_sheet('{{ $design_option->id }}');">+ Add</button>
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="delete_price_sheet('{{ $price_sheet->id }}');"><i class="ni ni-fat-delete"></i></button>
+                                            <button type="submit" class="btn btn-sm btn-primary" onclick="update_price_sheet('{{ $price_sheet->id }}');"><i class="ni ni-check-bold"></i></button>
                                         </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="container">
+                            <div class="row justify-content-md-center">
+                                <div class="col-6 p-3">
+                                    <input id="price_sheet_new_name_{{ $design_option->id }}" type="text" name="price_sheet_new_name" class="form-control" placeholder="Variation">
+                                </div>
+                                <div class="col-3 p-3">
+                                    <input id="price_sheet_new_price_{{ $design_option->id }}" type="number" class="form-control" placeholder="Price">
+                                </div>
+                                <div class="col-3 p-3">
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-success" onclick="new_price_sheet('{{ $design_option->id }}');">+ Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -69,6 +88,22 @@
             </div>
         @endforeach
 
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
+
+
+
+
+
+       
+</div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -101,7 +136,6 @@
                 </div>
             </div>
         </div>
-    </div>  
 
 </div>
 @endsection
@@ -141,7 +175,7 @@
         });
     }
 
-    async function new_design_option() {
+    async function new_design_option(category) {
 
         const { value: name } = await Swal.fire({
             title: 'Name of design option:',
@@ -167,6 +201,116 @@
                 data: {
                     name: name,
                     house_plan: "{{ $house_plan->id }}",
+                    category: category,
+                    _token: '{{ csrf_token() }}'
+                },
+            }).done(function (msg) {
+                if(msg['icon'] !== 'success') {
+                    Swal.fire({
+                        icon: msg['icon'],
+                        text: msg['msg']
+                    });
+                } else {
+                    var html = `
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h3 style="padding-top: 0.25em;padding-left: 1em;">${name}</h3>
+                                            </div>
+                                            <div class="col">
+                                                <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_option('${msg['id']}')"><i class="fa fa-trash-alt"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="container">
+                                        <div class="row justify-content-md-center">
+                                            <div class="col-6 p-3">
+                                                <input id="price_sheet_new_name_${msg['id']}" type="text" name="price_sheet_new_name" class="form-control" placeholder="Variation">
+                                            </div>
+                                            <div class="col-3 p-3">
+                                                <input id="price_sheet_new_price_${msg['id']}" type="number" class="form-control" placeholder="Price">
+                                            </div>
+                                            <div class="col-3 p-3">
+                                                <div class="float-right">
+                                                    <button type="submit" class="btn btn-success" onclick="new_price_sheet('${msg['id']}');">+ Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    $('#design_category_' + category).append(html);
+                }
+            });
+        }
+
+    }
+
+    async function delete_design_category(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "/delete-design-category",
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                }).done(function (msg) {
+                    if(msg['icon'] == 'success') {
+                        $("#design_category_" + id).remove();
+                    } else {
+                        Swal.fire({
+                            icon: msg['icon'],
+                            text: msg['msg']
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    async function new_design_category() {
+
+        const { value: name } = await Swal.fire({
+            title: 'Name of design category:',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'on'
+            },
+            inputPlaceholder: 'Exterior, Interior, Kitchen',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                return new Promise((resolve) => {
+                    resolve();
+                });
+            }
+        });
+
+        if(name) {
+            Swal.showLoading();
+
+            $.ajax({
+                url: "/create-design-category",
+                type: 'POST',
+                data: {
+                    name: name,
+                    house_plan: "{{ $house_plan->id }}",
                     _token: '{{ csrf_token() }}'
                 },
             }).done(function (msg) {
@@ -186,29 +330,14 @@
                                                 <h3 style="padding-top: 0.25em;padding-left: 1em;">${name}</h3>
                                             </div>
                                             <div class="col">
-                                                <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_option('${msg['id']}')"><i class="fa fa-trash-alt"></i></button>
+                                                <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_category('${msg['id']}')"><i class="fa fa-trash-alt"></i></button>
+                                                <button type="button" class="btn btn-sm btn-success float-right" onclick="new_design_option('${msg['id']}')">+ Add Design Option</button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="card-body">
-                                        <div class="container">
-                                            <div class="container" id="design_option_${msg['id']}">
-                                            </div>
-                                            <hr />
-                                            <div class="row justify-content-md-center">
-                                                <div class="col-sm col-xs-12 p-3">
-                                                    <input id="price_sheet_new_name_${msg['id']}" type="text" name="price_sheet_new_name" class="form-control" placeholder="Variation">
-                                                </div>
-                                                <div class="col-sm col-xs-12 p-3">
-                                                    <input id="price_sheet_new_price_${msg['id']}" type="number" class="form-control" placeholder="Price">
-                                                </div>
-                                                <div class="col-sm col-xs-12 p-3">
-                                                    <div class="float-right">
-                                                        <button type="submit" class="btn btn-success" onclick="new_price_sheet('${msg['id']}');">+ Add</button>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <div class="card-body" style="background-color: lightgray;">
+                                        <div class="container" id="design_category_${msg['id']}">
                                         </div>
                                     </div>
                                 </div>
@@ -216,7 +345,7 @@
                         </div>
                     `;
 
-                    $('#design-options-div').append(html);
+                    $('#design-categories-div').append(html);
                 }
             });
         }
@@ -245,13 +374,13 @@
             } else {
                 var html = `
                     <div class="row">
-                        <div class="col-sm col-xs-12 p-3">
+                        <div class="col-6 p-3">
                             <input id="price_sheet_name_${msg['id']}" type="text" class="form-control" value="${name}">
                         </div>
-                        <div class="col-sm col-xs-12 p-3">
+                        <div class="col-3 p-3">
                             <input id="price_sheet_price_${msg['id']}" type="number" class="form-control" value="${price}">
                         </div>
-                        <div class="col-sm col-xs-12 p-3">
+                        <div class="col-3 p-3">
                             <div class="float-right">
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="delete_price_sheet('${msg['id']}');"><i class="ni ni-fat-delete"></i></button>
                                 <button type="submit" class="btn btn-sm btn-primary" onclick="update_price_sheet('${msg['id']}');"><i class="ni ni-check-bold"></i></button>
@@ -286,10 +415,14 @@
                         _token: '{{ csrf_token() }}'
                     },
                 }).done(function (msg) {
-                    Swal.fire({
-                        icon: msg['icon'],
-                        text: msg['msg']
-                    });
+                    if(msg['icon'] != 'success') {
+                        Swal.fire({
+                            icon: msg['icon'],
+                            text: msg['msg']
+                        });
+                    } else {
+                        $('#price_sheet_' + id).remove();
+                    }
                 }, function(){
                 });
             }

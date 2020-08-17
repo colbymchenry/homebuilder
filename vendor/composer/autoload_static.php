@@ -531,6 +531,7 @@ class ComposerStaticInit15c0ccbcc4a8b7d288e1abcae36ca7af
 
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\DesignCategory' => __DIR__ . '/../..' . '/app/DesignCategory.php',
         'App\\DesignOption' => __DIR__ . '/../..' . '/app/DesignOption.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\File' => __DIR__ . '/../..' . '/app/File.php',
@@ -550,6 +551,7 @@ class ComposerStaticInit15c0ccbcc4a8b7d288e1abcae36ca7af
         'App\\Http\\Controllers\\PDFController' => __DIR__ . '/../..' . '/app/Http/Controllers/PDFController.php',
         'App\\Http\\Controllers\\ProjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProjectController.php',
         'App\\Http\\Controllers\\TaskController' => __DIR__ . '/../..' . '/app/Http/Controllers/TaskController.php',
+        'App\\Http\\Controllers\\VendorController' => __DIR__ . '/../..' . '/app/Http/Controllers/VendorController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',
@@ -573,6 +575,7 @@ class ComposerStaticInit15c0ccbcc4a8b7d288e1abcae36ca7af
         'App\\TaskTemplate' => __DIR__ . '/../..' . '/app/TaskTemplate.php',
         'App\\TemplateTask' => __DIR__ . '/../..' . '/app/TemplateTask.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'App\\Vendor' => __DIR__ . '/../..' . '/app/Vendor.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/CorsService.php',

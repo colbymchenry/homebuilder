@@ -236,6 +236,8 @@ return [
         'DesignOption' => App\DesignOption::class,
         'File' => App\File::class,
         'TaskTemplate' => App\TaskTemplate::class,
+        'Vendor' => App\Vendor::class,
+        'DesignCategory' => App\DesignCategory::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
