@@ -20,11 +20,12 @@ class PDFController extends Controller
         $sub_totals = [];
 
         foreach(\request()->toArray() as $key => $value) {
-            \Log::info($key . ":" . $value);
             if($key !== '_token' && $value != null) {
                 if(strpos($key, 'design_option_') !== false) {
                     $id = explode('_', $key)[2];
                     if(DesignOption::where('id', $id)->exists()) {
+            \Log::info($key . ":" . $value);
+
                         $choices[$id] = $value;
                         $design_option = DesignOption::where('id', $id)->first();
                         if(array_key_exists($design_option->category, $sub_totals)) {
