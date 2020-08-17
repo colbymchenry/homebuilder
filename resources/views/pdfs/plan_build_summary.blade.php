@@ -53,7 +53,6 @@
                             <tr>
                                 <th scope="row"><b>Subtotal:</b></th>
                                 <td></td>
-                                <td><b>{{ PriceSheet::formatToCurrency($sub_totals[$category->id]) }}</b></td>
                             </tr>
                         </tbody>
                     </table>
