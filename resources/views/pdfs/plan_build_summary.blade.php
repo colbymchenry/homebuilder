@@ -53,6 +53,11 @@
                             <tr>
                                 <th scope="row"><b>Subtotal:</b></th>
                                 <td></td>
+                                @if(array_key_exists($category->id, $sub_totals))
+                                    <td><b>{{ PriceSheet::formatToCurrency($sub_totals[$category->id]) }}</b></td>
+                                @else
+                                    <td><b>$0</b></td>
+                                @endif
                             </tr>
                         </tbody>
                     </table>

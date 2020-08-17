@@ -24,24 +24,17 @@ class PDFController extends Controller
                 if(strpos($key, 'design_option_') !== false) {
                     $id = explode('_', $key)[2];
                     if(DesignOption::where('id', $id)->exists()) {
-
                         $choices[$id] = $value;
                         $design_option = DesignOption::where('id', $id)->first();
                         if(array_key_exists($design_option->category, $sub_totals)) {
                             $sub_totals[$design_option->category] += PriceSheet::where('id', $value)->first()->price;
-                            \Log::info($design_option->name . '+=' . $design_option->category);
-                            \Log::info($sub_totals[$design_option->category]);
                         } else {
                             $sub_totals[$design_option->category] = PriceSheet::where('id', $value)->first()->price;
-                            \Log::info($design_option->name . '=' . $design_option->category);
                         }
                     }
                 }
             }
         }
-
-        \Log::info("------------");
-        \Log::info($sub_totals);
 
         return view('pdfs.plan_build_summary')->with('choices', $choices)->with('sub_totals', $sub_totals)
         ->with('house_plan', \request('house_plan'))->with('project', \request('project'))->with('lot', \request('lot'));
