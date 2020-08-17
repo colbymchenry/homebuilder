@@ -73,9 +73,13 @@ Route::post('/create-design-option','HousePlansController@createDesignOption');
 
 Route::post('/delete-design-option','HousePlansController@deleteDesignOption');
 
+Route::post('/rename-design-option', 'HousePlansController@renameDesignOption');
+
 Route::post('/create-design-category', 'HousePlansController@createDesignCategory');
 
 Route::post('/delete-design-category', 'HousePlansController@deleteDesignCategory');
+
+Route::post('/rename-design-category', 'HousePlansController@renameDesignCategory');
 
 Route::post('/create-price-sheet','HousePlansController@createPriceSheet');
 
@@ -98,3 +102,4 @@ Route::post('/set-lot-plan', 'LotController@setPlan');
 Route::post('/buildout-pdf', 'PDFController@generatePDF_PlanBuildout');
 
 Route::post('/create-vendor', 'VendorController@create');
+

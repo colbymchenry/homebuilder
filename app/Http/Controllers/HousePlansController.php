@@ -103,6 +103,22 @@ class HousePlansController extends Controller
         return QuickResponse::success('Design option deleted.');
     }
 
+    public function renameDesignOption(Request $request)
+    {
+        $id = $request['id'];
+        $name = $request['name'];
+
+        if(!DesignOption::where('id', $id)->exists()) {
+            return QuickResponse::warning('Design option does not exists.');
+        }
+
+        $design_option = DesignOption::where('id', $id)->first();
+        $design_option->name = $name;
+        $design_option->save();
+
+        return QuickResponse::success('Design category renamed.');
+    }
+
     public function createPriceSheet(Request $request)
     {
         $name = $request['name'];
@@ -210,4 +226,21 @@ class HousePlansController extends Controller
 
         return QuickResponse::success('Design category deleted.');
     }
+
+    public function renameDesignCategory(Request $request)
+    {
+        $id = $request['id'];
+        $name = $request['name'];
+
+        if(!DesignCategory::where('id', $id)->exists()) {
+            return QuickResponse::warning('Design category does not exists.');
+        }
+
+        $design_category = DesignCategory::where('id', $id)->first();
+        $design_category->name = $name;
+        $design_category->save();
+
+        return QuickResponse::success('Design category renamed.');
+    }
+
 }

@@ -22,7 +22,14 @@
                         <div class="card-header container">
                             <div class="row">
                                 <div class="col">
-                                    <h3 style="padding-top: 0.25em;padding-left: 1em;">{{ $design_category->name }}</h3>
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <h3 style="padding-top: 0.25em;padding-left: 1em;" id="category_name_{{ $design_category->id }}">{{ $design_category->name }}</h3>
+                                        </div>
+                                        <div class="col-xs-2 pl-1 pt-1">
+                                            <a href="javascript:rename_category('{{ $design_category->id }}')"><i class="far fa-edit"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_category('{{ $design_category->id }}')"><i class="fa fa-trash-alt"></i></button>
@@ -448,6 +455,48 @@
                 text: msg['msg']
             });
         });
+    }
+
+    async function rename_category(id) {
+
+        const { value: name } = await Swal.fire({
+            title: 'Name of design category:',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'on'
+            },
+            inputPlaceholder: 'Exterior, Interior, Kitchen',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                return new Promise((resolve) => {
+                    resolve();
+                });
+            }
+        });
+
+        if(name) {
+            Swal.showLoading();
+
+            $.ajax({
+                url: "/rename-design-category",
+                type: 'POST',
+                data: {
+                    name: name,
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+            }).done(function (msg) {
+                if(msg['icon'] !== 'success') {
+                    Swal.fire({
+                        icon: msg['icon'],
+                        text: msg['msg']
+                    });
+                } else {
+                    $('#category_name_' + id).text(name);
+                }
+            });
+        }
+
     }
 </script>
 
