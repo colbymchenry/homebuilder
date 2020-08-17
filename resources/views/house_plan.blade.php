@@ -5,6 +5,11 @@
     <div class="row justify-content-center" style="padding-bottom: 2em;">
     <div class="col-md-8">
         <div class="col">
+            <div class="float-left">
+                <button type="button" id="show-order-btn" class="btn btn-primary" data-toggle="modal" data-target="#order_modal">Modify Order</button>
+            </div>
+        </div>
+        <div class="col">
             <div class="float-right">
                 <button type="button" class="btn btn-success" onclick="new_design_category()">+ Add Design Category</button>
             </div>
@@ -12,7 +17,7 @@
 </div>
     </div>
     <div id="design-categories-div">
-
+    <!-- TODO: Add ordering on side of screen in small floating DIV -->
 
 
     @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('name')->get() as $design_category)
@@ -49,7 +54,14 @@
                         <div class="card-header container">
                             <div class="row">
                                 <div class="col">
-                                    <h3 style="padding-top: 0.25em;padding-left: 1em;">{{ $design_option->name }}</h3>
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <h3 style="padding-top: 0.25em;padding-left: 1em;" id="option_name_{{ $design_option->id }}">{{ $design_option->name }}</h3>
+                                        </div>
+                                        <div class="col-xs-2 pl-1 pt-1">
+                                            <a href="javascript:rename_option('{{ $design_option->id }}');"><i class="far fa-edit"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_option('{{ $design_option->id }}')"><i class="fa fa-trash-alt"></i></button>
@@ -145,6 +157,29 @@
         </div>
 
 </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="order_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modify Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="hide-new-order-btn">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -225,7 +260,14 @@
                                     <div class="card-header container">
                                         <div class="row">
                                             <div class="col">
-                                                <h3 style="padding-top: 0.25em;padding-left: 1em;">${name}</h3>
+                                                <div class="row">
+                                                    <div class="col-xs-2">
+                                                        <h3 style="padding-top: 0.25em;padding-left: 1em;" id="option_name_${msg['id']}">${name}</h3>
+                                                    </div>
+                                                    <div class="col-xs-2 pl-1 pt-1">
+                                                        <a href="javascript:rename_option('${msg['id']}');"><i class="far fa-edit"></i></a>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col">
                                                 <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_option('${msg['id']}')"><i class="fa fa-trash-alt"></i></button>
@@ -493,6 +535,48 @@
                     });
                 } else {
                     $('#category_name_' + id).text(name);
+                }
+            });
+        }
+
+    }
+
+    async function rename_option(id) {
+
+        const { value: name } = await Swal.fire({
+            title: 'Name of design option:',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'on'
+            },
+            inputPlaceholder: 'Brass, Brown, White',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                return new Promise((resolve) => {
+                    resolve();
+                });
+            }
+        });
+
+        if(name) {
+            Swal.showLoading();
+
+            $.ajax({
+                url: "/rename-design-option",
+                type: 'POST',
+                data: {
+                    name: name,
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+            }).done(function (msg) {
+                if(msg['icon'] !== 'success') {
+                    Swal.fire({
+                        icon: msg['icon'],
+                        text: msg['msg']
+                    });
+                } else {
+                    $('#option_name_' + id).text(name);
                 }
             });
         }
