@@ -177,7 +177,7 @@ class HousePlansController extends Controller
 
 
         return view('house_plan_builder')->with('house_plan', HousePlan::where('id', $id)->first())
-        ->with('lot', Lot::where('id', $id)->first())->with('project', Project::where('id', $id)->first());
+        ->with('lot', Lot::where('id', $lot)->first())->with('project', Project::where('id', $project)->first());
     }
 
     public function createDesignCategory(Request $request)
