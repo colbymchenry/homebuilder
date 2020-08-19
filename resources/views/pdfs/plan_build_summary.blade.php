@@ -38,7 +38,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach(DesignOption::where('house_plan', $house_plan)->orderBy('name')->where('category', $category->id)->get() as $design_option)
+                            @foreach(DesignOption::where('house_plan', $house_plan)->orderBy('order', 'ASC')->where('category', $category->id)->get() as $design_option)
                             <tr>
                                 <th scope="row">{{ $design_option->name }}</th>
                                 @if(array_key_exists($design_option->id, $choices))
