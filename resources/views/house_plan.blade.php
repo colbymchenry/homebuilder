@@ -36,6 +36,9 @@
                                 <div class="col">
                                     <div class="row">
                                         <div class="col">
+                                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#cat_body_{{ $design_category->id }}" aria-expanded="false" aria-controls="cat_body_{{ $design_category->id }}">
+                                            Button with data-target
+                                        </button>
                                             <button type="button" class="btn btn-sm btn-success float-right" onclick="new_design_option('{{ $design_category->id }}')">+ Add Design Option</button>
                                         </div>
                                         <div class="col-2">
@@ -45,8 +48,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="card-body" style="background-color: lightgray;">
+                       
+                        <div class="card-body collapse show" style="background-color: lightgray;" id="cat_body_{{ $design_category->id }}">
                             <div class="container" id="design_category_{{ $design_category->id }}">
                                
 
