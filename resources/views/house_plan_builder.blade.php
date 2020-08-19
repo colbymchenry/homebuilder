@@ -42,10 +42,22 @@
                                         <p>{{ $design_option->name }}</p>
                                     </div>
                                     <div class="col-sm col-xs-12 p-3">
+
+                                    @php
+                                        $first = true;
+                                    @endphp
+
                                         <select class="selectpicker" id="design_option_{{ $design_option->id }}" data-toggle="select" title="Simple select">
                                             <optgroup label="Standard">
                                                 @foreach(PriceSheet::where('design_option', $design_option->id)->where('price', '<', 1)->get() as $price_sheet)
-                                                    <option data-amount="{{ $price_sheet->price }}" data-id="{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
+                                                    @if($first)
+                                                        <option data-amount="{{ $price_sheet->price }}" data-id="{{ $price_sheet->id }}" selected>{{ $price_sheet->name }}</option>
+                                                        @php
+                                                        $first = false;
+                                                        @endphp
+                                                    @else
+                                                        <option data-amount="{{ $price_sheet->price }}" data-id="{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </optgroup>
                                             <optgroup label="Upgrade">
