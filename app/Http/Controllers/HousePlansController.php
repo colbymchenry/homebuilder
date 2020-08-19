@@ -208,6 +208,12 @@ class HousePlansController extends Controller
         $design_category = new DesignCategory();
         $design_category->name = $name;
         $design_category->house_plan = $house_plan;
+        if(DesignCategory::where('house_plan', $house_plan)->exists()) {
+            $design_category->order = DesignCategory::where('house_plan', $house_plan)->max('order') + 1;
+        } else {
+            $design_category->order = 0;
+        }
+
         $design_category->save();
 
         return QuickResponse::success('Design category created.', ['id' => $design_category->id]);
@@ -241,6 +247,18 @@ class HousePlansController extends Controller
         $design_category->save();
 
         return QuickResponse::success('Design category renamed.');
+    }
+
+    public function setDesignCategryOrders(Request $request) {
+        foreach($request['categories'] as $order => $id) {
+            if(DesignCategory::where('id', $id)->exists()) {
+                $category = DesignCategory::where('id', $id)->first();
+                $category->order = $order;
+                $category->save();
+            }
+        }
+
+        return QuickResponse::success('Success.');
     }
 
 }

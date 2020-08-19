@@ -6,7 +6,7 @@
     <div class="col-md-8">
         <div class="col">
             <div class="float-left">
-                <button type="button" id="show-order-btn" class="btn btn-primary" data-toggle="modal" data-target="#order_modal">Modify Order</button>
+                <button type="button" id="show-order-btn" class="btn btn-primary" data-toggle="modal" data-target="#order_modal" clic>Modify Order</button>
             </div>
         </div>
         <div class="col">
@@ -17,10 +17,7 @@
 </div>
     </div>
     <div id="design-categories-div">
-    <!-- TODO: Add ordering on side of screen in small floating DIV -->
-
-
-    @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('name')->get() as $design_category)
+    @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('order', 'ASC')->get() as $design_category)
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
@@ -37,8 +34,14 @@
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_category('{{ $design_category->id }}')"><i class="fa fa-trash-alt"></i></button>
-                                    <button type="button" class="btn btn-sm btn-success float-right" onclick="new_design_option('{{ $design_category->id }}')">+ Add Design Option</button>
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="button" class="btn btn-sm btn-success float-right" onclick="new_design_option('{{ $design_category->id }}')">+ Add Design Option</button>
+                                        </div>
+                                        <div class="col-2">
+                                            <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_category('{{ $design_category->id }}')"><i class="fa fa-trash-alt"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +50,7 @@
                             <div class="container" id="design_category_{{ $design_category->id }}">
                                
 
-        @foreach(DesignOption::where('house_plan', $house_plan->id)->orderBy('name')->where('category', $design_category->id)->get() as $design_option)
+        @foreach(DesignOption::where('house_plan', $house_plan->id)->orderBy('name', 'ASC')->where('category', $design_category->id)->get() as $design_option)
             <div class="row justify-content-center" id="div_design_option_{{ $design_option->id }}">
                 <div class="col-md-12">
                     <div class="card">
@@ -172,9 +175,24 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="container">
-          <div class="row">
-          </div>
+        <div class="container" id="order_div">
+              @foreach(DesignCategory::orderBy('order', 'ASC')->get() as $design_category)
+                <div class="row shadow p-1 mb-3 bg-white rounded" id="placement_{{ $design_category->id }}">
+                    <div class="col pt-3">
+                        <p>{{ $design_category->name }}</p>
+                    </div>
+                    <div class="col pt-3">
+                        <div class="row">
+                            <div class="col"></div>
+                            <div class="col"></div>
+                            <div class="col">
+                                <a href="javascript:move_up('{{ $design_category->id }}');" class="float-left"><i class="fas fa-arrow-up"></i></a>
+                                <a href="javascript:move_down('{{ $design_category->id }}');" class="float-right"><i class="fas fa-arrow-down"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              @endforeach
         </div>
       </div>
     </div>
@@ -376,11 +394,10 @@
                                     <div class="card-header container">
                                         <div class="row">
                                             <div class="col">
-                                                <h3 style="padding-top: 0.25em;padding-left: 1em;">${name}</h3>
-                                            </div>
-                                            <div class="col">
-                                                <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_category('${msg['id']}')"><i class="fa fa-trash-alt"></i></button>
                                                 <button type="button" class="btn btn-sm btn-success float-right" onclick="new_design_option('${msg['id']}')">+ Add Design Option</button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_category('${msg['id']}')"><i class="fa fa-trash-alt"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -582,6 +599,57 @@
         }
 
     }
+
+    function move_up(id) {
+        var obj = $(`#placement_${id}`);
+        var above = obj.prev('div');
+        var beneath = obj.next('div');
+
+        if(above.length != 0) {
+            obj.insertBefore(above);
+        }
+    }
+
+    function move_down(id) {
+        var obj = $(`#placement_${id}`);
+        var above = obj.prev('div');
+        var beneath = obj.next('div');
+
+        if(beneath.length != 0) {
+            obj.insertAfter(beneath);
+        }
+    }
+
+    $(document).ready(function() {
+        $('#order_modal').on('hidden.bs.modal', function (e) {
+            var div = document.getElementById('order_div');
+            var divs = div.getElementsByTagName('div');
+            var divArray = [];
+            for (var i = 0; i < divs.length; i += 1) {
+                if(divs[i].id.includes('placement_')) {
+                    divArray.push(divs[i].id.split('_')[1]);
+                }
+            }
+
+            $.ajax({
+                url: "/set-design-category-orders",
+                type: 'POST',
+                data: {
+                    categories: divArray,
+                    _token: '{{ csrf_token() }}'
+                },
+            }).done(function (msg) {
+                if(msg['icon'] !== 'success') {
+                    Swal.fire({
+                        icon: msg['icon'],
+                        text: msg['msg']
+                    });
+                } else {
+                    history.go(0);
+                }
+            });
+        });
+    });
 </script>
 
 <script type="text/javascript">

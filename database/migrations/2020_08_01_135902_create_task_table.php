@@ -34,6 +34,6 @@ class CreateTaskTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lot_schedules');
+        Schema::dropIfExists('tasks');
     }
 }

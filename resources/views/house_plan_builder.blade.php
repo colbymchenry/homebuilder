@@ -16,7 +16,7 @@
         </div>
     </div>
     <div id="design-options-div">
-        @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('name')->get() as $design_category)
+        @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('order', 'ASC')->get() as $design_category)
         @if($design_category->hasOptions())
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -35,7 +35,7 @@
                         <div class="container">
 
                         
-                            @foreach(DesignOption::where('house_plan', $house_plan->id)->orderBy('name')->where('category', $design_category->id)->get() as $design_option)
+                            @foreach(DesignOption::where('house_plan', $house_plan->id)->orderBy('name', 'ASC')->where('category', $design_category->id)->get() as $design_option)
                                 @if($design_option->hasPriceSheets())
                                 <div class="row p-3">
                                     <div class="col-sm col-xs-12 p-3">

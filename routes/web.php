@@ -81,6 +81,8 @@ Route::post('/delete-design-category', 'HousePlansController@deleteDesignCategor
 
 Route::post('/rename-design-category', 'HousePlansController@renameDesignCategory');
 
+Route::post('/set-design-category-orders', 'HousePlansController@setDesignCategryOrders');
+
 Route::post('/create-price-sheet','HousePlansController@createPriceSheet');
 
 Route::post('/delete-price-sheet','HousePlansController@deletePriceSheet');
