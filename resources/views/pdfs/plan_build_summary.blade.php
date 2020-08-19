@@ -32,9 +32,9 @@
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
-                                <th scope="col">Structure</th>
-                                <th scope="col">Choice</th>
-                                <th scope="col">Upgrade Price</th>
+                                <th scope="col"></th>
+                                <th scope="col">Selection</th>
+                                <th scope="col">Price</th>
                             </tr>
                         </thead>
                         <tbody>
