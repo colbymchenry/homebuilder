@@ -272,7 +272,7 @@
                     });
                 } else {
                     var html = `
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center" id="div_design_option_${msg['id']}">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header container">
