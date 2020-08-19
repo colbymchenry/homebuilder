@@ -43,8 +43,6 @@
                                     </div>
                                     <div class="col-sm col-xs-12 p-3">
                                         <select class="selectpicker" id="design_option_{{ $design_option->id }}" data-toggle="select" title="Simple select">
-                                            <option data-amount="0" selected>Standard</option>
-                                        
                                             <optgroup label="Standard">
                                                 @foreach(PriceSheet::where('design_option', $design_option->id)->where('price', '<', 1)->get() as $price_sheet)
                                                     <option data-amount="{{ $price_sheet->price }}" data-id="{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
