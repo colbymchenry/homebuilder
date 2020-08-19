@@ -24,7 +24,7 @@
     <body>
         <div class="container">
 
-        @foreach(DesignCategory::where('house_plan', $house_plan)->orderBy('name')->get() as $category)
+        @foreach(DesignCategory::where('house_plan', $house_plan)->orderBy('order', 'ASC')->get() as $category)
         @if($category->hasOptions())
             <h1>{{ $category->name }}</h1>
             <div class="row justify-content-center">
@@ -38,7 +38,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach(DesignOption::where('house_plan', $house_plan)->orderBy('order', 'ASC')->where('category', $category->id)->get() as $design_option)
+                            @foreach(DesignOption::where('house_plan', $house_plan)->orderBy('name')->where('category', $category->id)->get() as $design_option)
                             <tr>
                                 <th scope="row">{{ $design_option->name }}</th>
                                 @if(array_key_exists($design_option->id, $choices))
