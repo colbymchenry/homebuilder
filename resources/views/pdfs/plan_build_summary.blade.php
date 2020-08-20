@@ -84,13 +84,11 @@
                 </div>
             </div>
             @if($count > 0 && $count < ($max - 1))
-            <div class="page-break"></div>
-            @else
-                @php
-                    $count += 1;
-                    \Log::info($count . ':' . $max);
-                @endphp
+                <div class="page-break"></div>
             @endif
+            @php
+                $count += 1;
+            @endphp
         @endif
         @endforeach
         
