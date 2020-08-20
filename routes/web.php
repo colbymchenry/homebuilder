@@ -105,3 +105,5 @@ Route::post('/buildout-pdf', 'PDFController@generatePDF_PlanBuildout');
 
 Route::post('/create-vendor', 'VendorController@create');
 
+Route::post('/lot-save-address', 'LotController@saveAddress');
+

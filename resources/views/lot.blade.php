@@ -24,11 +24,11 @@
                 <div class="card-body">
                     <div class="container">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-2">
                                 <h4>Plan:</h4>
                             </div>
-                            <div class="col">
-                                <select class="selectpicker" id="plan_selection" data-toggle="select">
+                            <div class="col-10">
+                                <select class="selectpicker w-75" id="plan_selection" data-toggle="select">
                                     @if($lot->plan !== null && HousePlan::where('id', $lot->plan)->exists())
                                         <option value="" data-id="-1">Select...</option>
                                         <option value="" data-id="{{ $lot->plan }}" selected>{{ HousePlan::where('id', $lot->plan)->first()->name }}</option>
@@ -42,6 +42,28 @@
                                         @endif
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-2">
+                                <h4 class="pt-3">Address:</h4>
+                            </div>
+                            <div class="col-10">
+                                <div class="row">
+                                    <form class="w-100" action="/lot-save-address" method="POST">
+                                        @csrf
+                                        <input id="lot_id" name="lot_id" type="text" value="{{ $lot->id }}" class="form-control hidden" hidden>
+                                        <div class="row">
+                                        <div class="col-10">
+                                            <input id="address" type="text" class="form-control" name="address" value="{{ $lot->address }}">
+                                        </div>
+                                        <div class="col-1">
+                                            <button type="submit" class="btn btn-primary"><i class="far fa-save"></i></button>
+                                        </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

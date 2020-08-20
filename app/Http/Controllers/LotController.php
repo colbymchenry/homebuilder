@@ -104,4 +104,19 @@ class LotController extends Controller
         return QuickResponse::success("Plan set sucessfully.");
     }
 
+    public function saveAddress() {
+        $lot_id = \request('lot_id');
+        $address = \request('address');
+
+        if (!Lot::where('id', $lot_id)->exists()) {
+            return redirect('/home');
+        }
+
+        $lot = Lot::where('id', $lot_id)->first();
+        $lot->address = $address;
+        $lot->save();
+
+        return redirect('/lot?id=' . $lot->id);
+    }
+
 }

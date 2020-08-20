@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DesignOption;
+use App\HousePlan;
 use App\PriceSheet;
+use App\Project;
+use App\Lot;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
@@ -14,7 +17,8 @@ class PDFController extends Controller
     {
         $this->middleware('auth');
     }
-
+    
+   
     public function generatePDF_PlanBuildout() {
         $choices = [];
         $sub_totals = [];
@@ -39,13 +43,13 @@ class PDFController extends Controller
         $data = [
             'choices' => $choices,
             'sub_totals' => $sub_totals,
-            'house_plan' => \request('house_plan'),
-            'project' => \request('project'),
-            'lot' => \request('lot')
+            'house_plan' => HousePlan::where('id', \request('house_plan'))->first(),
+            'project' => Project::where('id', \request('project'))->first(),
+            'lot' => Lot::where('id', \request('lot'))->first()
         ];
-
+    
         $pdf = PDF::loadView('pdfs.plan_build_summary', $data);
-        return $pdf->download('plan_build_summary.pdf');
+        return $pdf->stream('plan_build_summary.pdf');
     }
 
     public function saveToFile($path, $output) {
