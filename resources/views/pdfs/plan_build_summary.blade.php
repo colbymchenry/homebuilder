@@ -6,7 +6,7 @@
         <meta name="robots" content="noindex">
         <title>Summary Build Out</title>
 
-        <link rel="stylesheet" href="{{ assets('css/bootstrap337.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap337.css') }}">
             <style>
                 .page-break {
                     page-break-after: always;
