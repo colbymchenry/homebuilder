@@ -88,6 +88,7 @@
             @else
                 @php
                     $count += 1;
+                    \Log::info($count . ':' . $max);
                 @endphp
             @endif
         @endif
