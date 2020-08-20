@@ -22,6 +22,9 @@
                 <div class="row">
                     <h5>Project: {{ $project->name }}</h5>
                     <p>Lot: #{{ $lot->number }}</p>
+                    @foreach(explode(',', $lot->address) as $line)
+                        <small>{{ ltrim($line) }}</small>
+                    @endforeach
                 </div>
             </div>
             <div class="col-xs-7">
