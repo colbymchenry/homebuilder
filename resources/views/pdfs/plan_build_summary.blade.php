@@ -86,7 +86,7 @@
                 </div>
             </div>
             @if($count > 0 && $count < ($max - 2))
-                <!-- <div class="page-break"></div> -->
+                <div class="page-break"></div>
             @endif
             @php
                 $count += 1;
