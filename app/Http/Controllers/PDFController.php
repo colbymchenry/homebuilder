@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DesignOption;
 use App\PriceSheet;
-use Barryvdh\DomPDF\PDF;
-use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 // https://github.com/dompdf/dompdf
