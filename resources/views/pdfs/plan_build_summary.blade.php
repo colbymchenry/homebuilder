@@ -42,6 +42,7 @@
         <hr />
         @php
         $count = 0;
+        $max = DesignCategory::where('house_plan', $house_plan->id)->count();
         @endphp
 
         @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('order', 'ASC')->get() as $category)
@@ -82,7 +83,7 @@
                     </table>
                 </div>
             </div>
-            @if($count > 0)
+            @if($count > 0 && $count < $max)
             <div class="page-break"></div>
             @else
                 @php
