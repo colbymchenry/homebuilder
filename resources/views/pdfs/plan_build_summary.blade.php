@@ -51,7 +51,7 @@
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
-                                <th scope="col"><h1 style="margin-bottom: -0.5em;">{{ $category->name }}</h1></th>
+                                <th scope="col"><h3 style="margin-bottom: -0.5em;">{{ $category->name }}</h3></th>
                                 <th scope="col">Selection</th>
                                 <th scope="col">Price</th>
                             </tr>
