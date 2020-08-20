@@ -20,8 +20,7 @@
         <div class="row justify-content-center">
             <div class="col-xs-2">
                 <div class="row">
-                    <h5>Project: {{ $project->name }}</h5>
-                    <p>Lot: #{{ $lot->number }}</p>
+                    <h5>{{ $project->name }} - Lot: #{{ $lot->number }}</h5>
                     <small>
                     @foreach(explode(',', $lot->address) as $line)
                         {{ ltrim($line) }}<br />
