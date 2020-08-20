@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DesignOption;
 use App\PriceSheet;
+use Barryvdh\DomPDF\PDF;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 
@@ -36,8 +37,16 @@ class PDFController extends Controller
             }
         }
 
-        return view('pdfs.plan_build_summary')->with('choices', $choices)->with('sub_totals', $sub_totals)
-        ->with('house_plan', \request('house_plan'))->with('project', \request('project'))->with('lot', \request('lot'));
+        $data = [
+            'choices' => $choices,
+            'sub_totals' => $sub_totals,
+            'house_plan' => \request('house_plan'),
+            'project' => \request('project'),
+            'lot' => \request('lot')
+        ];
+
+        $pdf = PDF::loadView('pdfs.plan_build_summary', $data);
+        return $pdf->download('plan_build_summary.pdf');
     }
 
     public function saveToFile($path, $output) {
