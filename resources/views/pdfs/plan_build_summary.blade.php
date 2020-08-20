@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title>Summary Build Out</title>
 
             <!-- Fonts -->
@@ -19,7 +19,12 @@
             <!-- Icons -->
             <link href="{{ asset('/assets/vendor/nucleo/css/nucleo.css') }}" rel="stylesheet">
             <link href="{{ asset('/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-    </head>
+            <style>
+                .page-break {
+                    page-break-after: always;
+                }
+            </style>
+        </head>
 
     <body>
         <div class="container">
@@ -65,6 +70,7 @@
             </div>
 
         @endif
+        <div class="page-break"></div>
         @endforeach
         
         
