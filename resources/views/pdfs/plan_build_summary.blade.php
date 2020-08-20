@@ -6,7 +6,7 @@
         <meta name="robots" content="noindex">
         <title>Summary Build Out</title>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ assets('css/bootstrap337.css') }}">
             <style>
                 .page-break {
                     page-break-after: always;
@@ -84,6 +84,7 @@
                 </div>
             </div>
             @if($count > 0 && $count < ($max - 2))
+                <!-- <div class="page-break"></div> -->
             @endif
             @php
                 $count += 1;
