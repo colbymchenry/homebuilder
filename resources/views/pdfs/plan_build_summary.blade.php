@@ -83,7 +83,7 @@
                     </table>
                 </div>
             </div>
-            @if($count > 0 && $count < $max)
+            @if($count > 0 && $count < ($max - 1))
             <div class="page-break"></div>
             @else
                 @php
