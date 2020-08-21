@@ -7,6 +7,7 @@ use App\Task;
 use App\QuickResponse;
 use App\TaskTemplate;
 use App\TemplateTask;
+use PayPal\Api\Template;
 
 class TaskController extends Controller
 {
@@ -107,27 +108,14 @@ class TaskController extends Controller
         return QuickResponse::success('Task created.', ['id' => $task->id]);
     }
 
-    public function sortTemplateTask(Request $request) {
-        $id = $request['id'];
-        $order = $request['order'];
-
-        if(!TemplateTask::where('id', $id)->exists()) {
-            return QuickResponse::warning("Could not find task.");
-        }
-
-        $task = TemplateTask::where("id", $id)->first();
-        $task->order = $order;
-        $task->save();
-
-        return QuickResponse::success("Success.");
-    }
-
     public function deleteTemplate(Request $request) {
         if(TaskTemplate::where('id', $request['id'])->exists()) {
             $template = TaskTemplate::where("id", $request['id'])->first();
             $template->delete();
             return QuickResponse::success('Task template deleted');
         }
+
+        TemplateTask::where('template_id', $request['id'])->delete();
 
         return QuickResponse::warning('Task template not found.');
     }
@@ -155,6 +143,56 @@ class TaskController extends Controller
 
     public function indexTemplates() {
         return view('task_templates');
+    }
+
+    public function renameTemplate(Request $request) {
+        $id = $request['id'];
+
+        if(!TaskTemplate::where('id', $id)->exists()) {
+            abort(404);
+        }
+
+        $task_template = TaskTemplate::where('id', $id)->first();
+        $task_template->name = $request['name'];
+        $task_template->save();
+
+        return QuickResponse::success("Success");
+    }
+
+    public function saveTemplate(Request $request) {
+        $name_days = $request['namesAndDays'];        
+        foreach($request['order'] as $order => $task_id) {
+            if(TemplateTask::where('id', $task_id)->exists()) {
+                $task = TemplateTask::where('id', $task_id)->first();
+                $task->order = $order;
+                if(array_key_exists($task_id, $name_days)) {
+                    $name = explode(':', $name_days[$task_id])[0];
+                    $days = explode(':', $name_days[$task_id])[1];
+                    $task->name = $name;
+                    $task->alloted_days = $days;
+                }
+                $task->save();
+            }
+        }
+        return QuickResponse::success("Success");
+    }
+
+    public function loadTemplate(Request $request) {
+        $lot_id = $request['lot_id'];
+        $template_id = $request['template_id'];
+
+        foreach(TemplateTask::where('template_id', $template_id)->get() as $template_task) {
+            $task = new Task();
+            $task->name = $template_task->name;
+            $task->relational_table = 'lots';
+            $task->relational_id = $lot_id;
+            $Date = date("Y-m-d");
+            $task->start_date = $Date;
+            $task->end_date = date('Y-m-d', strtotime($Date. ' + ' . $template_task->alloted_days . ' days'));
+            $task->save();
+        }
+
+        return QuickResponse::success('Success');
     }
     
 }

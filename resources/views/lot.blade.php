@@ -81,6 +81,7 @@
                             <h5 style="padding-top: 0.25em;">Schedule</h5>
                         </div>
                         <div class="col-sm" style="text-align: right;">
+                            <button type="button" id="show-template-btn" class="btn btn-sm btn-success" data-toggle="modal" data-target="#template_modal" clic>Load Template</button>
                             <button type="submit" class="btn btn-sm btn-primary" onclick="delete_lot();">Add Item</button>
                         </div>
                     </div>
@@ -145,6 +146,35 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="template_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Select Template</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="hide-new-order-btn">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container" id="order_div">
+            <select class="selectpicker w-75" id="template_selection" data-toggle="select">
+                @foreach(TaskTemplate::get() as $template)
+                    <option data-id="{{ $template->id }}">{{ $template->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <br />
+        <div class="container">
+            <div class="row">
+                <button type="button" class="btn btn-success float-right" onclick="load_template();">Load Template</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -197,6 +227,40 @@
                 Swal.fire({
                     icon: msg['icon'],
                     text: msg['msg']
+                });
+            }
+        });
+    }
+
+    function load_template() {
+        var obj = $('#template_selection');
+        var template_id = obj.find(":selected").data('id');
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this! It will remove any current tasks!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, do it!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "/load-template",
+                    type: 'POST',
+                    data: {
+                        lot_id: "{{ $lot->id }}",
+                        template_id: template_id, 
+                        _token: '{{ csrf_token() }}'
+                    },
+                }).done(function (msg) {
+                    Swal.fire({
+                        icon: msg['icon'],
+                        text: msg['msg']
+                    });
+                }, function(){
+                    history.go(0);
                 });
             }
         });

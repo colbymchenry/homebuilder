@@ -162,6 +162,7 @@
           },
       }).done(function (msg) {
           if(msg['icon'] == 'success') {
+            history.go(0);
           } else {
               Swal.fire({
                   icon: msg['icon'],

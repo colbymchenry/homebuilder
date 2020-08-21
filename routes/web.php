@@ -97,8 +97,6 @@ Route::post('/delete-template-task','TaskController@deleteTemplateTask');
 
 Route::post('/create-template-task','TaskController@createTemplateTask');
 
-Route::post('/sort-template-task','TaskController@sortTemplateTask');
-
 Route::post('/set-lot-plan', 'LotController@setPlan');
 
 Route::post('/buildout-pdf', 'PDFController@generatePDF_PlanBuildout');
@@ -107,3 +105,8 @@ Route::post('/create-vendor', 'VendorController@create');
 
 Route::post('/lot-save-address', 'LotController@saveAddress');
 
+Route::post('/rename-task-template', 'TaskController@renameTemplate');
+
+Route::post('/save-template', 'TaskController@saveTemplate');
+
+Route::post('/load-template', 'TaskController@loadTemplate');
