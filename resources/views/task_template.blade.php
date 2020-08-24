@@ -55,10 +55,10 @@
                     </div>
                     <div class="container pt-6">
                       <div class="row">
-                        <div class="col-8 col-xs-6">
+                        <div class="col-6">
                           <input type="text" class="form-control" placeholder="Name..." id="task_name"></input>
                         </div>
-                        <div class="col-2 col-xs-6">
+                        <div class="col-3">
                           <input type="number" class="form-control" placeholder="Days..." id="task_days"></input>
                         </div>
                         <div class="col-2" style="text-align: center;">
