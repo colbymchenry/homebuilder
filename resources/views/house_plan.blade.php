@@ -17,7 +17,6 @@
     <div id="design-categories-div">
     @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('order', 'ASC')->get() as $design_category)
             <div class="row justify-content-center">
-                <div class="col-md-8">
                     <div class="card">
                         <div class="card-header container" data-toggle="collapse" data-target="#cat_body_{{ $design_category->id }}" aria-expanded="false" aria-controls="cat_body_{{ $design_category->id }}">
                             <div class="row">
@@ -113,7 +112,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         @endforeach
 
