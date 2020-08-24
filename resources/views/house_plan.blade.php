@@ -3,7 +3,6 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center" style="padding-bottom: 2em;">
-    <div class="col-md-8">
         <div class="col">
             <div class="float-left">
                 <button type="button" id="show-order-btn" class="btn btn-primary" data-toggle="modal" data-target="#order_modal" clic>Modify Order</button>
@@ -14,7 +13,6 @@
                 <button type="button" class="btn btn-success" onclick="new_design_category()">+ Add Design Category</button>
             </div>
         </div>
-</div>
     </div>
     <div id="design-categories-div">
     @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('order', 'ASC')->get() as $design_category)
