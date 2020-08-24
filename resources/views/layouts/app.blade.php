@@ -50,7 +50,7 @@
 
     <style>
 @media (min-width: 320px) {  
-  h3 {font-size:0.5rem;} /*1rem = 16px*/
+  h3 {font-size:1.0rem;} /*1rem = 16px*/
 }
         </style>
 
