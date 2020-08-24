@@ -57,10 +57,10 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
-                                        <div class="col-xs-2">
+                                        <div class="col-6">
                                             <h3 style="padding-top: 0.25em;padding-left: 1em;" id="option_name_{{ $design_option->id }}">{{ $design_option->name }}</h3>
                                         </div>
-                                        <div class="col-xs-2 pl-1 pt-1">
+                                        <div class="col-4 pl-1 pt-1">
                                             <a href="javascript:rename_option('{{ $design_option->id }}');"><i class="far fa-edit"></i></a>
                                         </div>
                                     </div>
