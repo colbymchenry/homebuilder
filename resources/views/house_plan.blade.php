@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('head')
+<style>
+    @media (min-width: 320px) {  
+        h3 {font-size:0.5rem;} /*1rem = 16px*/
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center" style="padding-bottom: 2em;">
