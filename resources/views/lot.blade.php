@@ -94,10 +94,10 @@
                     <div class="container">
                         @foreach(Task::where('relational_table', 'lots')->where('relational_id', $lot->id)->get() as $task)
                             <div class="row">
-                                <div class="col-sm">
+                                <div class="col-6">
                                     <h5><a href="/task?id={{ $task->id }}">{{ $task->name }}</a></h5>
                                 </div>
-                                <div class="col-sm">
+                                <div class="col-6">
                                     <div class="btn-group">
                                         <button type="button" id="#task-{{ $task->id }}" class="btn {{ ($task->status == 'completed' ? 'btn-success' : ($task->status == 'in-progress' ? 'btn-warning' : ($task->status == 'not-started' ? 'btn-danger' : 'btn-danger'))) }} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ ucwords(str_replace('-', ' ', $task->status)) }}</button>
                                         <div class="dropdown-menu">
