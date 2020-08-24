@@ -59,8 +59,10 @@
                                                 <input id="address" type="text" class="form-control" name="address" value="{{ $lot->address }}">
                                             </div>
                                         </div>
-                                        <div class="row pt-2" style="text-align: right;">
-                                            <button type="submit" class="btn btn-primary" style="text-align: right;">Save</button>
+                                        <div class="row pt-2">
+                                            <div class="col-sm-12">
+                                                <button type="submit" class="btn btn-primary" style="text-align: right;">Save</button>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
