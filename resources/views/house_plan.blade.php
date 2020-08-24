@@ -33,7 +33,7 @@
                                 <div class="col">
                                     <div class="row">
                                         <div class="col">
-                                            <button type="button" class="btn btn-sm btn-success float-right" onclick="new_design_option('{{ $design_category->id }}')">+ Add Design Option</button>
+                                            <button type="button" class="btn btn-sm btn-success float-right" onclick="new_design_option('{{ $design_category->id }}')">+ Option</button>
                                         </div>
                                         <div class="col-2">
                                             <button type="button" class="btn btn-sm btn-danger float-right" onclick="delete_design_category('{{ $design_category->id }}')"><i class="fa fa-trash-alt"></i></button>
