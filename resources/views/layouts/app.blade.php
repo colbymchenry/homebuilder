@@ -48,6 +48,11 @@
     <link href="{{ asset('/assets/vendor/nucleo/css/nucleo.css') }}" rel="stylesheet">
     <link href="{{ asset('/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
 
+    <style>
+@media (min-width: 320px) {  
+  h3 {font-size:1.5rem;} /*1rem = 16px*/
+}
+        </style>
 
 </head>
 <body>
