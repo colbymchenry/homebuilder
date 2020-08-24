@@ -10,7 +10,7 @@
         </div>
         <div class="col">
             <div class="float-right">
-                <button type="button" class="btn btn-success" onclick="new_design_category()">+ Add Design Category</button>
+                <button type="button" class="btn btn-success" onclick="new_design_category()">+ Category</button>
             </div>
         </div>
     </div>
