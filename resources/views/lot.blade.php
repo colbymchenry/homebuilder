@@ -7,10 +7,10 @@
             <div class="card">
                 <div class="card-header container">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-6">
                             <h5 style="padding-top: 0.25em;">{{ $project->name }} Lot #{{ $lot->number }}</h5>
                         </div>
-                        <div class="col-4" style="text-align: right;">
+                        <div class="col-6" style="text-align: right;">
                             @if($lot->plan !== null && HousePlan::where('id', $lot->plan)->exists())
                                 <a class="btn btn-sm btn-primary" href="/house-plan-builder?id={{ $lot->plan }}&lot={{ $lot->id }}&project={{ $project->id }}" id="spec_build_btn">Build Out</a>
                             @else
@@ -24,10 +24,10 @@
                 <div class="card-body">
                     <div class="container">
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-2 col-sm-12">
                                 <h4>Plan:</h4>
                             </div>
-                            <div class="col-10">
+                            <div class="col-10 col-sm-12">
                                 <select class="selectpicker w-75" id="plan_selection" data-toggle="select">
                                     @if($lot->plan !== null && HousePlan::where('id', $lot->plan)->exists())
                                         <option value="" data-id="-1">Select...</option>
