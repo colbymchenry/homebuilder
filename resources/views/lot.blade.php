@@ -28,7 +28,7 @@
                                 <h4>Plan:</h4>
                             </div>
                             <div class="col-sm-12">
-                                <select class="dropdown bootstrap-select w-100" id="plan_selection" data-toggle="select">
+                                <select class="selectpicker" id="plan_selection" data-toggle="select">
                                     @if($lot->plan !== null && HousePlan::where('id', $lot->plan)->exists())
                                         <option value="" data-id="-1">Select...</option>
                                         <option value="" data-id="{{ $lot->plan }}" selected>{{ HousePlan::where('id', $lot->plan)->first()->name }}</option>
@@ -84,8 +84,8 @@
                             <h5 style="padding-top: 0.25em;">Schedule</h5>
                         </div>
                         <div class="col-sm" style="text-align: right;">
-                            <button type="button" id="show-template-btn" class="btn btn-sm btn-success" data-toggle="modal" data-target="#template_modal" clic>Load Template</button>
-                            <button type="submit" class="btn btn-sm btn-primary" onclick="delete_lot();">Add Item</button>
+                            <button type="button" id="show-template-btn" class="btn btn-sm btn-success" data-toggle="modal" data-target="#template_modal" clic>Template</button>
+                            <button type="submit" class="btn btn-sm btn-primary" onclick="delete_lot();">+</button>
                         </div>
                     </div>
                 </div>
