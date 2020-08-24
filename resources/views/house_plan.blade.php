@@ -17,7 +17,7 @@
     <div id="design-categories-div">
     @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('order', 'ASC')->get() as $design_category)
             <div class="row justify-content-center">
-                    <div class="card">
+                    <div class="card w-100">
                         <div class="card-header container" data-toggle="collapse" data-target="#cat_body_{{ $design_category->id }}" aria-expanded="false" aria-controls="cat_body_{{ $design_category->id }}">
                             <div class="row">
                                 <div class="col">
@@ -25,6 +25,8 @@
                                         <div class="col-12">
                                             <div class="col">
                                                 <h3 style="padding-top: 0.25em;padding-left: 1em;" id="category_name_{{ $design_category->id }}">{{ $design_category->name }}</h3>
+                                            </div>
+                                            <div class="col">
                                                 <a href="javascript:rename_category('{{ $design_category->id }}')"><i class="far fa-edit"></i></a>
                                             </div>
                                         </div>
