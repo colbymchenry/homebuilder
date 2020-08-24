@@ -55,15 +55,16 @@
                                         @csrf
                                         <input id="lot_id" name="lot_id" type="text" value="{{ $lot->id }}" class="form-control hidden" hidden>
                                         <div class="row">
-                                        <div class="col-10">
-                                            <input id="address" type="text" class="form-control" name="address" value="{{ $lot->address }}">
+                                            <div class="col-sm-12">
+                                                <input id="address" type="text" class="form-control" name="address" value="{{ $lot->address }}">
+                                            </div>
                                         </div>
-                                        <div class="col-1">
+                                        <div class="row">
                                             <button type="submit" class="btn btn-primary"><i class="far fa-save"></i></button>
-                                        </div>
                                         </div>
                                     </form>
                                 </div>
+                      
                             </div>
                         </div>
                     </div>
