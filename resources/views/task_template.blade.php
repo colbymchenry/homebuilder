@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header container">
                     <div class="row">
-                        <div class="col-sm">
+                        <div class="col">
                             <div class="row">
                                 <div class="col-xs-2">
                                     <h3 style="padding-top: 0.25em;padding-left: 1em;" id="template_name">{{ $template->name }}</h3>
@@ -17,7 +17,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm" style="text-align: right;">
+                        <div class="col" style="text-align: right;">
                             <div class="float-right">
                                 <button type="submit" class="btn btn-sm btn-primary" onclick="save_template();"><i class="ni ni-check-bold"></i></button>
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="delete_template();"><i class="fas fa-trash-alt"></i></button>
@@ -55,13 +55,13 @@
                     </div>
                     <div class="container pt-6">
                       <div class="row">
-                        <div class="col-8">
+                        <div class="col-xs-8">
                           <input type="text" class="form-control" placeholder="Name..." id="task_name"></input>
                         </div>
-                        <div class="col-2">
+                        <div class="col-xs-2">
                           <input type="number" class="form-control" placeholder="Days..." id="task_days"></input>
                         </div>
-                        <div class="col-2" style="text-align: center;">
+                        <div class="col-xs-2" style="text-align: center;">
                           <button type="button" class="btn btn-secondary" onclick="add_task()">Add</button>
                         </div>
                       </div>
