@@ -55,13 +55,13 @@
                     </div>
                     <div class="container pt-6">
                       <div class="row">
-                        <div class="col-xs-8">
+                        <div class="col-8 col-xs-6">
                           <input type="text" class="form-control" placeholder="Name..." id="task_name"></input>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-2 col-xs-6">
                           <input type="number" class="form-control" placeholder="Days..." id="task_days"></input>
                         </div>
-                        <div class="col-xs-2" style="text-align: center;">
+                        <div class="col-2" style="text-align: center;">
                           <button type="button" class="btn btn-secondary" onclick="add_task()">Add</button>
                         </div>
                       </div>
