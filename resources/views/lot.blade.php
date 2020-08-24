@@ -12,11 +12,11 @@
                         </div>
                         <div class="col-sm" style="text-align: right;">
                             @if($lot->plan !== null && HousePlan::where('id', $lot->plan)->exists())
-                                <a class="btn btn-sm btn-primary" href="/house-plan-builder?id={{ $lot->plan }}&lot={{ $lot->id }}&project={{ $project->id }}" id="spec_build_btn">Spec Build Out</a>
+                                <a class="btn btn-sm btn-primary" href="/house-plan-builder?id={{ $lot->plan }}&lot={{ $lot->id }}&project={{ $project->id }}" id="spec_build_btn">Build Out</a>
                             @else
-                                <a class="btn btn-sm btn-primary disabled" href="#" id="spec_build_btn">Spec Build Out</a>    
+                                <a class="btn btn-sm btn-primary disabled" href="#" id="spec_build_btn">Build Out</a>    
                             @endif
-                            <button type="button" class="btn btn-sm btn-danger" onclick="delete_lot();">Delete Lot</button>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="delete_lot();"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     </div>
                 </div>
