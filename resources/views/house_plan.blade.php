@@ -22,11 +22,9 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
-                                        <div class="col-10">
+                                        <div class="col-12">
                                             <div class="col">
                                                 <h3 style="padding-top: 0.25em;padding-left: 1em;" id="category_name_{{ $design_category->id }}">{{ $design_category->name }}</h3>
-                                            </div>
-                                            <div class="col">
                                                 <a href="javascript:rename_category('{{ $design_category->id }}')"><i class="far fa-edit"></i></a>
                                             </div>
                                         </div>
