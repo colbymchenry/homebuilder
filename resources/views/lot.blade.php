@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="btn-group">
-                                        <button type="button" id="#task-{{ $task->id }}" class="btn {{ ($task->status == 'completed' ? 'btn-success' : ($task->status == 'in-progress' ? 'btn-warning' : ($task->status == 'not-started' ? 'btn-danger' : 'btn-danger'))) }} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ ucwords(str_replace('-', ' ', $task->status)) }}</button>
+                                        <button type="button" id="#task-{{ $task->id }}" class="btn btn-sm {{ ($task->status == 'completed' ? 'btn-success' : ($task->status == 'in-progress' ? 'btn-warning' : ($task->status == 'not-started' ? 'btn-danger' : 'btn-danger'))) }} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ ucwords(str_replace('-', ' ', $task->status)) }}</button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" onclick="set_status('{{ $task->id }}', 'not-started')">Not Started</a>
                                             <a class="dropdown-item" onclick="set_status('{{ $task->id }}', 'in-progress')">In Progress</a>
