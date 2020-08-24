@@ -31,20 +31,20 @@
                     <div class="container all-slides" id="templates-div">
                         @foreach($template->getTasks() as $task)
                         <div class="row pt-3 slide" id="task-{{ $task->id }}" data-id="{{ $task->id }}">
-                          <div class="col-xs-4 pt-2">
+                          <div class="col-2 pt-2">
                               <div class="row">
-                                <div class="col">
+                                <div class="col-xs-2">
                                   <a href="javascript:move_up('{{ $task->id }}');" class="float-left"><i class="fas fa-arrow-up"></i></a>
                                 </div>
-                                <div class="col">
+                                <div class="col-xs-2">
                                   <a href="javascript:move_down('{{ $task->id }}');" class="float-right"><i class="fas fa-arrow-down"></i></a>
                                 </div>
                               </div>
                           </div>
-                          <div class="col-7">
+                          <div class="col-5">
                             <input type="text" class="form-control" value="{{ $task->name }}" id="task_name_{{ $task->id }}"></input>
                           </div>
-                          <div class="col-2">
+                          <div class="col-3">
                             <input type="number" class="form-control" value="{{ $task->alloted_days }}" id="task_days_{{ $task->id }}"></input>
                           </div>
                           <div class="col-1 pt-2">
