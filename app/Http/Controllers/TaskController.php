@@ -181,6 +181,8 @@ class TaskController extends Controller
         $lot_id = $request['lot_id'];
         $template_id = $request['template_id'];
 
+        Task::where('relational_table', 'lots')->where('relational_id', $lot_id)->delete();
+
         foreach(TemplateTask::where('template_id', $template_id)->get() as $template_task) {
             $task = new Task();
             $task->name = $template_task->name;
