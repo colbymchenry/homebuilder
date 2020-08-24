@@ -36,7 +36,7 @@
                                 <div class="col-xs-2">
                                   <a href="javascript:move_up('{{ $task->id }}');" class="float-left"><i class="fas fa-arrow-up"></i></a>
                                 </div>
-                                <div class="col-xs-2">
+                                <div class="col-xs-2 pl-3">
                                   <a href="javascript:move_down('{{ $task->id }}');" class="float-right"><i class="fas fa-arrow-down"></i></a>
                                 </div>
                               </div>
