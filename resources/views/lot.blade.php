@@ -24,10 +24,10 @@
                 <div class="card-body">
                     <div class="container">
                         <div class="row">
-                            <div class="col-2 col-sm-12">
+                            <div class="col-sm-12">
                                 <h4>Plan:</h4>
                             </div>
-                            <div class="col-10 col-sm-12">
+                            <div class="col-sm-12">
                                 <select class="selectpicker w-75" id="plan_selection" data-toggle="select">
                                     @if($lot->plan !== null && HousePlan::where('id', $lot->plan)->exists())
                                         <option value="" data-id="-1">Select...</option>
