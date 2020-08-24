@@ -176,10 +176,10 @@
         <div class="container" id="order_div">
               @foreach(DesignCategory::orderBy('order', 'ASC')->get() as $design_category)
                 <div class="row shadow p-1 mb-3 bg-white rounded" id="placement_{{ $design_category->id }}">
-                    <div class="col-10 pt-3">
+                    <div class="col-8 pt-3">
                         <p>{{ $design_category->name }}</p>
                     </div>
-                    <div class="col-2 pt-3">
+                    <div class="col-4 pt-3">
                             <div class="col">
                                 <a href="javascript:move_up('{{ $design_category->id }}');" class="float-left"><i class="fas fa-arrow-up"></i></a>
                             </div>
