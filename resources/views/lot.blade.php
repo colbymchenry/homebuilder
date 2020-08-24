@@ -80,10 +80,10 @@
             <div class="card">
                 <div class="card-header container">
                     <div class="row">
-                        <div class="col-sm">
+                        <div class="col-6">
                             <h5 style="padding-top: 0.25em;">Schedule</h5>
                         </div>
-                        <div class="col-sm" style="text-align: right;">
+                        <div class="col-6" style="text-align: right;">
                             <button type="button" id="show-template-btn" class="btn btn-sm btn-success" data-toggle="modal" data-target="#template_modal" clic>Template</button>
                             <button type="submit" class="btn btn-sm btn-primary" onclick="delete_lot();">+</button>
                         </div>
