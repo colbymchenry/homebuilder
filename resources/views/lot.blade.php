@@ -60,7 +60,7 @@
                                             </div>
                                         </div>
                                         <div class="row pt-2">
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-12" style="text-align: right;">
                                                 <button type="submit" class="btn btn-primary" style="text-align: right;">Save</button>
                                             </div>
                                         </div>
