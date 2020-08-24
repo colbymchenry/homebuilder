@@ -46,10 +46,10 @@
                         </div>
                         <br />
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-sm-12">
                                 <h4 class="pt-3">Address:</h4>
                             </div>
-                            <div class="col-10">
+                            <div class="col-sm-12">
                                 <div class="row">
                                     <form class="w-100" action="/lot-save-address" method="POST">
                                         @csrf
