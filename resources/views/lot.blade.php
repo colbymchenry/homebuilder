@@ -7,10 +7,10 @@
             <div class="card">
                 <div class="card-header container">
                     <div class="row">
-                        <div class="col-sm">
+                        <div class="col-8">
                             <h5 style="padding-top: 0.25em;">{{ $project->name }} Lot #{{ $lot->number }}</h5>
                         </div>
-                        <div class="col-sm" style="text-align: right;">
+                        <div class="col-4" style="text-align: right;">
                             @if($lot->plan !== null && HousePlan::where('id', $lot->plan)->exists())
                                 <a class="btn btn-sm btn-primary" href="/house-plan-builder?id={{ $lot->plan }}&lot={{ $lot->id }}&project={{ $project->id }}" id="spec_build_btn">Build Out</a>
                             @else
