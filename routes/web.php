@@ -21,6 +21,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/setup', function() {
+    if(\request('pass') !== env('SETUP_PASS')) {
+        return redirect('/home');
+    }
+    return view('setup');
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/project', 'ProjectController@index');
@@ -44,6 +51,8 @@ Route::get('/vendors', 'VendorController@list');
 Route::get('/vendor', 'VendorController@getInfo');
 
 Route::get('/edit-vendor', 'VendorController@getIndex');
+
+Route::get('/contacts', 'ContactsController@contactsIndex');
 
 Route::post('/create-project', 'ProjectController@create');
 
@@ -110,3 +119,5 @@ Route::post('/rename-task-template', 'TaskController@renameTemplate');
 Route::post('/save-template', 'TaskController@saveTemplate');
 
 Route::post('/load-template', 'TaskController@loadTemplate');
+
+Route::post('/assign-roles', 'AdminController@assignUserRoles');
