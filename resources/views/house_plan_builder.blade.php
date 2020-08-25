@@ -41,7 +41,7 @@
                                     <div class="col-sm-12">
                                         <p>{{ $design_option->name }}</p>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-8">
 
                                     @php
                                         $first = true;
@@ -67,7 +67,7 @@
                                             </optgroup>
                                         </select>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <p id="price_{{ $design_option->id }}">$0.00</p>
                                     </div>
                                 </div>
