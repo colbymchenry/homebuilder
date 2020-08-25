@@ -23,8 +23,9 @@ class AdminController extends Controller
         $trade = $request['trade'] == 'true';
         $agent = $request['agent'] == 'true';
         $admin = $request['admin'] == 'true';
+        $bypass = $request['bypass'] == 'true';
 
-        if(!Auth::user()->admin) {
+        if(!Auth::user()->admin && !$bypass) {
             return QuickResponse::warning("Only admins can assign rules to other users.");
         }
 

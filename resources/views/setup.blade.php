@@ -41,7 +41,8 @@
                 user_id: id,
                 trade: 'false',
                 agent: 'false',
-                admin: 'true', 
+                admin: 'true',
+                bypass: 'true', 
                 _token: '{{ csrf_token() }}'
             },
         }).done(function (msg) {
