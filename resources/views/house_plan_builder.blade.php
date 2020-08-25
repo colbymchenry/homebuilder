@@ -19,10 +19,10 @@
     <div id="design-options-div">
         @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('order', 'ASC')->get() as $design_category)
         @if($design_category->hasOptions())
-        <div class="row justify-content-center" data-toggle="collapse" data-target="#cat_body_{{ $design_category->id }}" aria-expanded="false" aria-controls="cat_body_{{ $design_category->id }}">
+        <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header container">
+                    <div class="card-header container" data-toggle="collapse" data-target="#cat_body_{{ $design_category->id }}" aria-expanded="false" aria-controls="cat_body_{{ $design_category->id }}">
                         <div class="pl-3 pt-3">
                             <div class="row">
                                 <div class="col">
@@ -122,14 +122,19 @@
 
         $('#export_pdf').on('submit', function(event) {
             $("select[id^=design_option_]").each(function(e) {
-                var obj = $(this);
-                var id = obj.prop('id').split('_')[2];
-                var selected_id = obj.find(":selected").data('id');
+                var design_option_id = $(this).prop('id').split('_')[2];
 
-                $("<input />").attr("type", "hidden")
-                .attr("name", "design_option_" + id)
-                .attr("value", selected_id)
-                .appendTo("#export_pdf");
+                Array.from($(this).find(':selected')).map(function(item) {
+                    $(`option[id^="${$(item).text()}_${design_option_id}_"]`).each(function() {
+                        var price_sheet_id = $(this).prop('id').split('_')[2];
+
+                        $("<input />").attr("type", "hidden")
+                        .attr("name", "design_option_" + design_option_id)
+                        .attr("value", price_sheet_id)
+                        .appendTo("#export_pdf");
+                    });
+                });
+                
             });
         });
     });
