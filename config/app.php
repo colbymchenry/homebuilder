@@ -240,6 +240,7 @@ return [
         'DesignCategory' => App\DesignCategory::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'User' => App\User::class,
+        'BuildOut' => App\BuildOut::class
     ],
 
 ];

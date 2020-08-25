@@ -121,3 +121,5 @@ Route::post('/save-template', 'TaskController@saveTemplate');
 Route::post('/load-template', 'TaskController@loadTemplate');
 
 Route::post('/assign-roles', 'AdminController@assignUserRoles');
+
+Route::post('/save-buildout', 'LotController@saveBuildOut');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BuildOut;
 use App\HousePlan;
 use Illuminate\Http\Request;
 use App\Task;
@@ -117,6 +118,32 @@ class LotController extends Controller
         $lot->save();
 
         return redirect('/lot?id=' . $lot->id);
+    }
+
+    public function saveBuildOut(Request $request) {
+        $lot_id = $request['lot'];
+        $house_plan = $request['house_plan'];
+        $selections = $request['selections'];
+
+        if(BuildOut::where('lot', $lot_id)->exists()) {
+            BuildOut::where('lot', $lot_id)->delete();
+        }
+
+        $build_out = new BuildOut();
+        $build_out->lot = $lot_id;
+        $build_out->house_plan = $house_plan;
+
+        $str = "";
+        foreach($selections as $design_option_id => $price_sheet_id) {
+            if($price_sheet_id != null) {
+                $str = $str . $design_option_id . '=' . $price_sheet_id . ':';
+            }
+        } 
+
+        $build_out->selections = rtrim($str, ":");
+        $build_out->save();
+
+        return QuickResponse::success('Build out saved!');
     }
 
 }

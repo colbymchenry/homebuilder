@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row justify-content-center" style="padding-bottom: 2em;">
         <div class="col-md-8">
+            <button type="button" class="btn btn-success" onclick="saveBuildOut();">Save <i class="far fa-save"></i></button>
             <div class="float-right">
                 <form action="/buildout-pdf" method="POST" target="_blank" id="export_pdf">
                     @csrf
@@ -39,7 +40,7 @@
                                 @if($design_option->hasPriceSheets())
                                 <div class="row p-3">
                                     <div class="col-sm-12">
-                                        <p>{{ $design_option->name }}</p>
+                                        <p><b><u>{{ $design_option->name }}</u></b></p>
                                     </div>
                                     <div class="col-sm-8">
 
@@ -47,28 +48,46 @@
                                         $first = true;
                                     @endphp
 
-                                        <select class="selectpicker" id="design_option_{{ $design_option->id }}" data-toggle="select" title="Simple select">
+                                        <select class="selectpicker" id="design_option_{{ $design_option->id }}" data-toggle="select" data-style="btn-primary" title="Simple select">
                                             <optgroup label="Standard">
                                                 @foreach(PriceSheet::where('design_option', $design_option->id)->where('price', '<', 1)->get() as $price_sheet)
-                                                    @if($first)
-                                                        <option data-amount="{{ $price_sheet->price }}" data-id="{{ $price_sheet->id }}" selected>{{ $price_sheet->name }}</option>
-                                                        @php
-                                                        $first = false;
-                                                        @endphp
+                                                    
+                                                    @if($lot->getSelection($design_option->id) == null)
+                                                        @if($first)
+                                                            <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}" selected>{{ $price_sheet->name }}</option>
+                                                            @php
+                                                            $first = false;
+                                                            @endphp
+                                                        @else
+                                                            <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
+                                                        @endif
                                                     @else
-                                                        <option data-amount="{{ $price_sheet->price }}" data-id="{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
+                                                        @if($lot->getSelection($design_option->id) == $price_sheet->id)
+                                                            <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}" selected>{{ $price_sheet->name }}</option>
+                                                        @else
+                                                        <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
+                                                        @endif
                                                     @endif
+
                                                 @endforeach
                                             </optgroup>
                                             <optgroup label="Upgrade">
                                                 @foreach(PriceSheet::where('design_option', $design_option->id)->where('price', '>', 0)->get() as $price_sheet)
-                                                    <option data-amount="{{ $price_sheet->price }}" data-id="{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
+                                                    @if($lot->getSelection($design_option->id) == $price_sheet->id)
+                                                        <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}" selected>{{ $price_sheet->name }}</option>
+                                                    @else
+                                                        <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </optgroup>
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        <p id="price_{{ $design_option->id }}">$0.00</p>
+                                        @if($lot->getSelection($design_option->id) != null)
+                                            <p id="price_{{ $design_option->id }}">${{ PriceSheet::where('id', $lot->getSelection($design_option->id))->first()->price }}</p>
+                                        @else
+                                            <p id="price_{{ $design_option->id }}">$0.00</p>
+                                        @endif
                                     </div>
                                 </div>
                                 @endif
@@ -101,6 +120,7 @@
     var amounts = [];
 
     $(document).ready(function() {
+
         $("select[id^=design_option_]").on('change', function(e) {
             var obj = $(e.target);
             var id = e.target.id.split('_')[2];
@@ -130,5 +150,39 @@
             });
         });
     });
+
+    function saveBuildOut() {
+        var lot = '{{ $lot->id }}';
+        var house_plan = '{{ $house_plan->id }}';
+        var options = [];
+
+        $('select[id^="design_option_"]').each(function() {
+            var design_option_id = $(this).prop('id').split('_')[2];
+
+            Array.from($(this).find(':selected')).map(function(item) {
+                $(`option[id^="${$(item).text()}_${design_option_id}_"]`).each(function() {
+                    var price_sheet_id = $(this).prop('id').split('_')[2];
+                    options[design_option_id] = price_sheet_id;
+                });
+            });
+        }).promise().done(function() {
+            $.ajax({
+                url: "/save-buildout",
+                type: 'POST',
+                data: {
+                    lot: lot,
+                    house_plan: house_plan,
+                    selections: options, 
+                    _token: '{{ csrf_token() }}'
+                },
+            }).done(function (msg) {
+                Swal.fire({
+                    icon: msg['icon'],
+                    text: msg['msg']
+                });
+            });
+         });
+
+    }
 </script>
 @endsection
