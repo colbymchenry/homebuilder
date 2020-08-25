@@ -70,7 +70,7 @@
                                             </optgroup>
                                         </select>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-4 pt-2">
                                         <p id="price_{{ $design_option->id }}">@if($lot->getSelection($design_option->id) != null) ${{ PriceSheet::where('id', $lot->getSelection($design_option->id))->first()->price }} @else $0.00 @endif</p>
                                     </div>
                                 </div>
