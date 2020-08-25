@@ -38,10 +38,10 @@
                             @foreach(DesignOption::where('house_plan', $house_plan->id)->orderBy('name', 'ASC')->where('category', $design_category->id)->get() as $design_option)
                                 @if($design_option->hasPriceSheets())
                                 <div class="row p-3">
-                                    <div class="col-sm col-xs-12 p-3">
+                                    <div class="col-sm-12">
                                         <p>{{ $design_option->name }}</p>
                                     </div>
-                                    <div class="col-sm col-xs-12 p-3">
+                                    <div class="col-sm-6">
 
                                     @php
                                         $first = true;
@@ -67,7 +67,7 @@
                                             </optgroup>
                                         </select>
                                     </div>
-                                    <div class="col-sm col-xs-12 p-3">
+                                    <div class="col-sm-6">
                                         <p id="price_{{ $design_option->id }}">$0.00</p>
                                     </div>
                                 </div>
