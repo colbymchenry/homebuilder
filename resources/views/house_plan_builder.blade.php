@@ -53,41 +53,25 @@
                                                 @foreach(PriceSheet::where('design_option', $design_option->id)->where('price', '<', 1)->get() as $price_sheet)
                                                     
                                                     @if($lot->getSelection($design_option->id) == null)
-                                                        @if($first)
-                                                            <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}" selected>{{ $price_sheet->name }}</option>
-                                                            @php
-                                                            $first = false;
-                                                            @endphp
-                                                        @else
-                                                            <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
-                                                        @endif
+                                                        <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}" @if($first) selected @endif>{{ $price_sheet->name }}</option>
+                                                        @php
+                                                        $first = false;
+                                                        @endphp
                                                     @else
-                                                        @if($lot->getSelection($design_option->id) == $price_sheet->id)
-                                                            <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}" selected>{{ $price_sheet->name }}</option>
-                                                        @else
-                                                        <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
-                                                        @endif
+                                                        <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}" @if($lot->getSelection($design_option->id) == $price_sheet->id) selected @endif>{{ $price_sheet->name }}</option>
                                                     @endif
 
                                                 @endforeach
                                             </optgroup>
                                             <optgroup label="Upgrade">
                                                 @foreach(PriceSheet::where('design_option', $design_option->id)->where('price', '>', 0)->get() as $price_sheet)
-                                                    @if($lot->getSelection($design_option->id) == $price_sheet->id)
-                                                        <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}" selected>{{ $price_sheet->name }}</option>
-                                                    @else
-                                                        <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}">{{ $price_sheet->name }}</option>
-                                                    @endif
+                                                    <option data-amount="{{ $price_sheet->price }}" id="{{ $price_sheet->name }}_{{ $design_option->id }}_{{ $price_sheet->id }}" @if($lot->getSelection($design_option->id) == $price_sheet->id) selected @endif>{{ $price_sheet->name }}</option>
                                                 @endforeach
                                             </optgroup>
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        @if($lot->getSelection($design_option->id) != null)
-                                            <p id="price_{{ $design_option->id }}">${{ PriceSheet::where('id', $lot->getSelection($design_option->id))->first()->price }}</p>
-                                        @else
-                                            <p id="price_{{ $design_option->id }}">$0.00</p>
-                                        @endif
+                                        <p id="price_{{ $design_option->id }}">@if($lot->getSelection($design_option->id) != null) ${{ PriceSheet::where('id', $lot->getSelection($design_option->id))->first()->price }} @else $0.00 @endif</p>
                                     </div>
                                 </div>
                                 @endif
