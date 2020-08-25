@@ -19,7 +19,7 @@
     <div id="design-options-div">
         @foreach(DesignCategory::where('house_plan', $house_plan->id)->orderBy('order', 'ASC')->get() as $design_category)
         @if($design_category->hasOptions())
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" data-toggle="collapse" data-target="#cat_body_{{ $design_category->id }}" aria-expanded="false" aria-controls="cat_body_{{ $design_category->id }}">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header container">
@@ -32,10 +32,9 @@
                         </div>
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body collapse" id="cat_body_{{ $design_category->id }}">
                         <div class="container">
 
-                        
                             @foreach(DesignOption::where('house_plan', $house_plan->id)->orderBy('name', 'ASC')->where('category', $design_category->id)->get() as $design_option)
                                 @if($design_option->hasPriceSheets())
                                 <div class="row p-3">
